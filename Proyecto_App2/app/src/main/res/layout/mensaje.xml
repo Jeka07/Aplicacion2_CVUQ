@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textColor="@color/white"
-            android:textSize="@dimen/textSize_txt"
+            android:textSize="@dimen/textSize_mensajes_fragmentos"
             android:textAlignment="center"
             android:paddingLeft="10dip"/>
     </LinearLayout>

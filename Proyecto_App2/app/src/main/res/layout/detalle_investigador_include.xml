@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/fondo"
-        android:layout_width="@dimen/width_fondo_det_inv"
+        android:layout_width="@dimen/width_relative_fondo"
         android:layout_height="match_parent"
         android:background="@color/android_green"
         app:layout_constraintBottom_toBottomOf="@+id/contenedorTxts"
@@ -25,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/imagen_detalle"
-                android:layout_width="@dimen/width_img_det_inv"
-                android:layout_height="@dimen/heigth_img_det_inv"
+                android:layout_width="@dimen/width_imagen_detalle_inv"
+                android:layout_height="@dimen/heigth_imagen_detalle_inv"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:background="@color/gray"
@@ -37,38 +37,38 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/titulo"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/width_texto_datos_per"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="@+id/imagen_detalle"
-                app:layout_constraintLeft_toRightOf="@+id/imagen_detalle"
+                app:layout_constraintLeft_toRightOf="@id/imagen_detalle"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/titulo_datos"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/width_texto_datos_per"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/linea"
                     android:gravity="center"
                     android:text="@string/datos_personales_inv"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/android_darkgreen"
-                    android:textSize="@dimen/textSize_titulos_detInv"
+                    android:textSize="@dimen/textSize_titulos_Detalle"
                     android:textStyle="bold" />
 
-                <Button
+                <LinearLayout
                     android:id="@+id/linea"
                     android:layout_width="@dimen/width_linea"
                     android:layout_height="@dimen/heigth_linea"
-                    android:layout_below="@id/titulo_datos"
+                    android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:background="@color/android_darkgreen"
-                    android:gravity="center" />
+                    android:orientation="vertical" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/contenedorTxts"
@@ -86,9 +86,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="@dimen/txtE_marginEnd"
-                    android:layout_marginStart="@dimen/txtE_marginStart"
+                    android:layout_marginStart="@dimen/marginStart_texto_detalle_inv"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="@dimen/textSize_txt" />
+                    android:textSize="@dimen/textSize_detalle_inves" />
 
                 <TextView
                     android:id="@+id/txtGenero"
@@ -99,7 +99,7 @@
                     android:layout_marginEnd="@dimen/txtE_marginEnd"
                     android:layout_marginTop="10dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="@dimen/textSize_txt" />
+                    android:textSize="@dimen/textSize_detalle_inves" />
 
                 <TextView
                     android:id="@+id/txtNacionalidad"
@@ -110,7 +110,7 @@
                     android:layout_marginEnd="@dimen/txtE_marginEnd"
                     android:layout_marginTop="10dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="@dimen/textSize_txt" />
+                    android:textSize="@dimen/textSize_detalle_inves" />
 
                 <TextView
                     android:id="@+id/txtCategoria"
@@ -121,7 +121,7 @@
                     android:layout_marginEnd="@dimen/txtE_marginEnd"
                     android:layout_marginTop="10dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="@dimen/textSize_txt" />
+                    android:textSize="@dimen/textSize_detalle_inves" />
 
                 <TextView
                     android:id="@+id/txtEmail"
@@ -132,7 +132,7 @@
                     android:layout_marginEnd="@dimen/txtE_marginEnd"
                     android:layout_marginTop="10dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="@dimen/textSize_txt" />
+                    android:textSize="@dimen/textSize_detalle_inves" />
 
                 <TextView
                     android:id="@+id/txtLinkcvlac"
@@ -143,7 +143,7 @@
                     android:layout_marginEnd="20pt"
                     android:layout_marginTop="10dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/textSize_detalle_inves" />
 
                 <TextView
                     android:id="@+id/txtFormacion"
@@ -154,7 +154,7 @@
                     android:layout_marginEnd="@dimen/txtE_marginEnd"
                     android:layout_marginTop="10dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="@dimen/textSize_txt" />
+                    android:textSize="@dimen/textSize_detalle_inves" />
 
 
                 <TextView
@@ -165,7 +165,7 @@
                     android:text="@string/texto_nombre_IG"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize_txt"
+                    android:textSize="@dimen/textSize_detalle_inves"
                     android:textStyle="bold" />
 
                 <TextView
@@ -176,7 +176,7 @@
                     android:text="@string/genero_inv"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize_txt"
+                    android:textSize="@dimen/textSize_detalle_inves"
                     android:textStyle="bold" />
 
                 <TextView
@@ -187,7 +187,7 @@
                     android:text="@string/nacionalidad_inv"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize_txt"
+                    android:textSize="@dimen/textSize_detalle_inves"
                     android:textStyle="bold" />
 
                 <TextView
@@ -198,7 +198,7 @@
                     android:text="@string/texto_categoria"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize_txt"
+                    android:textSize="@dimen/textSize_detalle_inves"
                     android:textStyle="bold" />
 
                 <TextView
@@ -209,7 +209,7 @@
                     android:text="@string/texto_email_IG"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize_txt"
+                    android:textSize="@dimen/textSize_detalle_inves"
                     android:textStyle="bold" />
 
                 <TextView
@@ -221,12 +221,12 @@
                     android:text="@string/texto_link_cvlac"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize_txt"
+                    android:textSize="@dimen/textSize_detalle_inves"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/formacion_inv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/width_relative_fondo"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignTop="@id/txtFormacion"
@@ -234,7 +234,7 @@
                     android:text="@string/formacion_academica"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize_txt"
+                    android:textSize="@dimen/textSize_detalle_inves"
                     android:textStyle="bold" />
 
             </RelativeLayout>

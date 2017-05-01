@@ -2,13 +2,14 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:scrollbars="vertical">
 
     <LinearLayout
         android:id="@+id/linear2"
-        android:layout_width="@dimen/width_linear2"
+        android:layout_width="@dimen/width_linear_grupo"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:background="@color/android_green"
@@ -26,19 +27,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <LinearLayout
                 android:id="@+id/imagen_detalle"
-                android:layout_width="@dimen/tamanio_imagen_width"
-                android:layout_height="@dimen/tamanio_imagen_height"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:contentDescription=""
-                android:elevation="5dp"
-                android:src="@drawable/group"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imagen_detalle_img"
+                    android:layout_width="@dimen/size_imagen_grupo_width"
+                    android:layout_height="@dimen/size_imagen_grupo_height"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/white"
+                    android:contentDescription=""
+                    android:src="@drawable/group"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/linear1"
@@ -56,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="@dimen/marginEnd_detGrupo"
-                    android:layout_marginStart="@dimen/start_txt_detalleGrupo"
+                    android:layout_marginStart="@dimen/marginStart_textos_detalleGrupo"
                     android:layout_marginTop="@dimen/top_txt_detalleGrupo"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/textSize_detalle_grupo" />
@@ -109,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/txtNombre"
-                    android:layout_marginLeft="@dimen/left_txt_detalleGrupo"
+                    android:layout_marginLeft="@dimen/marginLeft_titulos_detalleGrupo"
                     android:text="@string/texto_nombre_IG"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/white"

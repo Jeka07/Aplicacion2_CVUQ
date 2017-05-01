@@ -1,14 +1,15 @@
 <resources>
+
     <!-- .................................Dimens organizados............................................. -->
 
     <!--Dimens fragment_inicio-->
-    <dimen name="text_size_bienvenida">40sp</dimen>
+    <dimen name="text_size_bienvenida">30sp</dimen>
     <dimen name="tamanio_imagen_inicio_width">340dp</dimen>
     <dimen name="tamanio_imagen_inicio_height">220dp</dimen>
-    <dimen name="marginRigth_imagen_inicio">0dp</dimen>
-    <dimen name="width_card_inicio">290dp</dimen>
+    <dimen name="marginRigth_imagen_inicio">10dp</dimen>
+    <dimen name="width_card_inicio">220dp</dimen>
     <dimen name="padding_card_inicio">7dp</dimen>
-    <dimen name="width_linea_inicio">260dp</dimen>
+    <dimen name="width_linea_inicio">160dp</dimen>
 
     <!-- Dimens fragment ingreso -->
     <dimen name="textSize_titulo_ingreso">30sp</dimen>
@@ -38,38 +39,35 @@
     <dimen name="textSize_actualizar_button_text">15sp</dimen>
 
     <!--Dimens listas (Grupos - Investigadores) -->
-    <dimen name="textSize_datos_card">17sp</dimen>
-    <dimen name="size_imagen_listasGI_width">100dp</dimen>
-    <dimen name="size_imagen_listasGI_heigth">100dp</dimen>
+    <dimen name="textSize_datos_card">20sp</dimen>
+    <dimen name="size_imagen_listasGI_width">140dp</dimen>
+    <dimen name="size_imagen_listasGI_heigth">140dp</dimen>
     <dimen name="marginStart_datos_card">10dp</dimen>
+
 
     <!--Dimens detalle grupos-->
     <dimen name="textSize_detalle_grupo">20sp</dimen>
-    <dimen name="size_imagen_grupo_width">352dp</dimen>
-    <dimen name="size_imagen_grupo_height">230dp</dimen>
+    <dimen name="size_imagen_grupo_width">342dp</dimen>
+    <dimen name="size_imagen_grupo_height">210dp</dimen>
     <dimen name="width_linear_grupo">130dp</dimen>
     <dimen name="marginLeft_titulos_detalleGrupo">3dp</dimen>
-    <dimen name="marginStart_textos_detalleGrupo">130dp</dimen>
+    <dimen name="marginStart_textos_detalleGrupo">140dp</dimen>
+
 
     <!-- Dimens detalles (Grupos -Investigadores) -->
     <dimen name="textSize_mensajes_fragmentos">20sp</dimen>
     <dimen name="width_linea_titulos">250dp</dimen>
-    <dimen name="textSize_titulos_Detalle">25dp</dimen>
+    <dimen name="textSize_titulos_Detalle">30dp</dimen>
 
     <!-- Dimens Detalle Investigador-->
     <dimen name="width_relative_fondo">160dp</dimen>
     <dimen name="textSize_detalle_inves">20sp</dimen>
     <dimen name="marginStart_texto_detalle_inv">165dp</dimen>
-    <dimen name="width_texto_datos_per">150dp</dimen>
-    <dimen name="width_imagen_detalle_inv">190dp</dimen>
-    <dimen name="heigth_imagen_detalle_inv">190dp</dimen>
+    <dimen name="width_texto_datos_per">200dp</dimen>
+    <dimen name="width_imagen_detalle_inv">210dp</dimen>
+    <dimen name="heigth_imagen_detalle_inv">210dp</dimen>
     <dimen name="width_linea">80pt</dimen>
     <dimen name="heigth_linea">6dp</dimen>
-
-    <!-- Dimens FAB -->
-    <dimen name="fab_size_mini">55dp</dimen>
-    <dimen name="fab_size_normal">65dp</dimen>
-
 
     <!-- .................................Dimens NO organizados............................................. -->
 
@@ -93,6 +91,8 @@
     <dimen name="top_txt_detalleGrupo">10dp</dimen>
     <dimen name="sigla_toolbar_top">5dp</dimen>
 
+    <dimen name="fab_size_mini">55dp</dimen>
+    <dimen name="fab_size_normal">65dp</dimen>
 
     <!--Dimens Toolbar - Aviso conexión-->
     <dimen name="textSize_toolbar">25sp</dimen>
@@ -104,7 +104,9 @@
     <dimen name="textSize_titulos_detInv">25sp</dimen>
     <dimen name="contenedor_marginStart">20dp</dimen>
     <dimen name="txtE_marginEnd">20pt</dimen>
+
     <dimen name="formacion_marginRight">120pt</dimen>
+
 
 
     <!--Dimens grupos-investigadores-lineas-->

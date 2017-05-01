@@ -43,6 +43,6 @@
         android:text="@string/mensaje_no_solicitudes"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="@dimen/textSize_txt" />
+        android:textSize="@dimen/textSize_mensajes_fragmentos" />
 
 </LinearLayout>

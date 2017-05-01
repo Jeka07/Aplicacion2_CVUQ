@@ -1,0 +1,73 @@
+<resources>
+    <!-- .................................Dimens organizados............................................. -->
+
+    <!--Dimens fragment_inicio-->
+    <dimen name="text_size_bienvenida">50sp</dimen>
+    <dimen name="tamanio_imagen_inicio_width">482dp</dimen>
+    <dimen name="tamanio_imagen_inicio_height">350dp</dimen>
+    <dimen name="marginRigth_imagen_inicio">70dp</dimen>
+    <dimen name="width_card_inicio">280dp</dimen>
+    <dimen name="padding_card_inicio">10dp</dimen>
+    <dimen name="width_linea_inicio">230dp</dimen>
+
+    <!-- Dimens fragment ingreso -->
+    <dimen name="textSize_titulo_ingreso">40sp</dimen>
+    <dimen name="marginBottom_linea_ingreso">35dp</dimen>
+    <dimen name="marginEnd_Buttons_ingreso">20dp</dimen>
+    <dimen name="marginTop_card_ingreso">100dp</dimen>
+    <dimen name="width_linea_ingreso">330dp</dimen>
+    <dimen name="textSize_edit_text_ingreso">30sp</dimen>
+    <dimen name="textSize_ingresar_button_text">23sp</dimen>
+
+    <!--Dimens Registro-->
+    <dimen name="textSize_titulo_registro">40sp</dimen>
+    <dimen name="width_linea_registro">250dp</dimen>
+    <dimen name="textSize_edit_text_registro">30sp</dimen>
+    <dimen name="textSize_registro_button_text">23sp</dimen>
+
+    <!--Dimens Editar perfil-->
+    <dimen name="textSize_titulo_Edit">40sp</dimen>
+    <dimen name="width_linea_editar">250dp</dimen>
+    <dimen name="tamanio_imagen_edit_width">430dp</dimen>
+    <dimen name="tamanio_imagen_edit_height">310dp</dimen>
+    <dimen name="width_card_edit_inicio">280dp</dimen>
+    <dimen name="marginTop_card_edit_inicio">35dp</dimen>
+    <dimen name="textSize_bienvenido_edit">50sp</dimen>
+    <dimen name="width_linea_edit_inicio">230dp</dimen>
+    <dimen name="textSize_edit_text_editar">30sp</dimen>
+    <dimen name="textSize_actualizar_button_text">23sp</dimen>
+
+    <!--Dimens listas (Grupos - Investigadores) -->
+    <dimen name="textSize_datos_card">25sp</dimen>
+    <dimen name="size_imagen_listasGI_width">140dp</dimen>
+    <dimen name="size_imagen_listasGI_heigth">140dp</dimen>
+    <dimen name="marginStart_datos_card">10dp</dimen>
+
+
+    <!--Dimens detalle grupos-->
+    <dimen name="textSize_detalle_grupo">30sp</dimen>
+    <dimen name="size_imagen_grupo_width">382dp</dimen>
+    <dimen name="size_imagen_grupo_height">250dp</dimen>
+    <dimen name="width_linear_grupo">185dp</dimen>
+    <dimen name="marginLeft_titulos_detalleGrupo">3dp</dimen>
+    <dimen name="marginStart_textos_detalleGrupo">195dp</dimen>
+
+    <!-- Dimens detalles (Grupos -Investigadores) -->
+    <dimen name="textSize_mensajes_fragmentos">40sp</dimen>
+    <dimen name="width_linea_titulos">250dp</dimen>
+    <dimen name="textSize_titulos_Detalle">35dp</dimen>
+
+    <!-- Dimens Detalle Investigador-->
+    <dimen name="width_relative_fondo">200dp</dimen>
+    <dimen name="textSize_detalle_inves">30sp</dimen>
+    <dimen name="marginStart_texto_detalle_inv">210dp</dimen>
+    <dimen name="width_texto_datos_per">500dp</dimen>
+    <dimen name="width_imagen_detalle_inv">230dp</dimen>
+    <dimen name="heigth_imagen_detalle_inv">230dp</dimen>
+    <dimen name="width_linea">100pt</dimen>
+    <dimen name="heigth_linea">6dp</dimen>
+
+    <!-- .................................Dimens NO organizados............................................. -->
+
+
+</resources>

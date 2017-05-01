@@ -20,7 +20,7 @@
                 android:text="@string/titulo_grupo"
                 android:textAlignment="center"
                 android:textColor="@color/android_darkgreen"
-                android:textSize="@dimen/textSize_titulos_Det" />
+                android:textSize="@dimen/textSize_titulos_Detalle" />
 
             <RelativeLayout
                 android:layout_width="@dimen/width_linea_titulos"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/mensaje_no_grupos"
                 android:padding="10dp"
-                android:textSize="@dimen/textSize_txt"
+                android:textSize="@dimen/textSize_mensajes_fragmentos"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:text="@string/mensaje_inv_no_grupo"/>

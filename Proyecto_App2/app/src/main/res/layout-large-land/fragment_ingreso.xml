@@ -24,10 +24,10 @@
             android:text="@string/iniciar_sesion"
             android:textAlignment="center"
             android:textColor="@color/android_green"
-            android:textSize="30sp" />
+            android:textSize="@dimen/textSize_titulo_ingreso" />
 
         <RelativeLayout
-            android:layout_width="250dp"
+            android:layout_width="@dimen/width_linea_ingreso"
             android:layout_height="5dp"
             android:layout_gravity="center"
             android:layout_marginBottom="35dp"
@@ -61,7 +61,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/correo"
-                        android:inputType="textUri" />
+                        android:inputType="textUri"
+                        android:textSize="@dimen/textSize_edit_text_ingreso"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -74,7 +75,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/contasenia"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:textSize="@dimen/textSize_edit_text_ingreso"
+                        />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -93,7 +96,8 @@
                         android:background="@color/android_darkgreen"
                         android:padding="10dp"
                         android:text="@string/ingresar"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize_ingresar_button_text"/>
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>

@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/imagen"
-            android:layout_width="@dimen/width_img_inv_det"
-            android:layout_height="@dimen/heigth_img_inv_det"
+            android:layout_width="@dimen/size_imagen_listasGI_width"
+            android:layout_height="@dimen/size_imagen_listasGI_heigth"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:background="@color/gray"
@@ -38,8 +38,8 @@
                 android:id="@+id/nombreInvestigador"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_str_nom_inv_det"
-                android:textSize="@dimen/textSize_card" />
+                android:layout_marginStart="@dimen/marginStart_datos_card"
+                android:textSize="@dimen/textSize_datos_card" />
 
             <TextView
                 android:id="@+id/apellido"
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/nombreInvestigador"
                 android:layout_below="@id/nombreInvestigador"
-                android:textSize="@dimen/textSize_card" />
+                android:textSize="@dimen/textSize_datos_card" />
 
             <TextView
                 android:id="@+id/linea1_investigador"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/apellido"
                 android:layout_below="@+id/apellido"
-                android:textSize="@dimen/textSize_card" />
+                android:textSize="@dimen/textSize_datos_card" />
 
             <TextView
                 android:id="@+id/linea2_investigador"
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/linea1_investigador"
                 android:layout_below="@+id/linea1_investigador"
-                android:textSize="@dimen/textSize_card" />
+                android:textSize="@dimen/textSize_datos_card" />
 
         </RelativeLayout>
     </RelativeLayout>

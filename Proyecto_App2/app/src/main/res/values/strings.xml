@@ -30,7 +30,7 @@
     -->
 
     <string name="bienvenido_cvuq">Bienvenido a CVUQ</string>
-    <string name="bienvenido">Bienvenido</string>
+    <string name="bienvenido">Bienvenid@</string>
     <string name="aviso_conexion">La aplicación no cuenta con acceso a internet, por favor verifique su conexión</string>
 
     <!--String textos fragmentos de editar, ingresar y registrar-->
