@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp">
+
+    <com.sa90.materialarcmenu.ArcMenu
+        android:id="@+id/arcmenu_menu"
+        android:layout_width="@dimen/fab_size_normal"
+        android:layout_height="@dimen/fab_size_normal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:padding="0dp"
+        app:fabSize="normal"
+        app:menu_color="@color/android_darkgreen"
+        app:menu_open="arc_left"
+        app:menu_radius="80dp"
+        app:menu_scr="@drawable/ic_mas">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_eliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rechazar"
+            app:backgroundTint="@color/android_darkgreen" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_aceptar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_aceptar2"
+            app:backgroundTint="@color/android_darkgreen" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_posponer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_posponer"
+            app:backgroundTint="@color/android_darkgreen" />
+    </com.sa90.materialarcmenu.ArcMenu>
+</RelativeLayout>

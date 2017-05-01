@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/resumen_grupo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:padding="8dp"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardElevation="7dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="false"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imagen"
+            android:layout_width="@dimen/width_imagen_listaGrupos"
+            android:layout_height="@dimen/heigth_imagen_listaGrupos"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@color/gray"
+            android:padding="1dp"
+            android:src="@drawable/group" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imagen"
+            android:animateLayoutChanges="false"
+            android:padding="1dp">
+
+            <TextView
+                android:id="@+id/nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_str_nom_inv_det"
+                android:textSize="@dimen/textSize_card" />
+
+            <TextView
+                android:id="@+id/sigla"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/nombre"
+                android:layout_below="@+id/nombre"
+                android:textSize="@dimen/textSize_card" />
+
+            <TextView
+                android:id="@+id/linea1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sigla"
+                android:layout_alignStart="@id/nombre"
+                android:textSize="@dimen/textSize_card" />
+
+            <TextView
+                android:id="@+id/linea2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linea1"
+                android:layout_alignStart="@id/nombre"
+                android:textSize="@dimen/textSize_card" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

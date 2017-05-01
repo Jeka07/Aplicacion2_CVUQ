@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/resumen_investigadores"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:padding="8dp"
+    card_view:cardBackgroundColor="#FFFFFF"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardElevation="7dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="false"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imagen"
+            android:layout_width="@dimen/width_img_inv_det"
+            android:layout_height="@dimen/heigth_img_inv_det"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@color/gray"
+            android:padding="1dp"
+            android:src="@drawable/investigador" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imagen"
+            android:animateLayoutChanges="false"
+            android:padding="1dp">
+
+            <TextView
+                android:id="@+id/nombreInvestigador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_str_nom_inv_det"
+                android:textSize="@dimen/textSize_card" />
+
+            <TextView
+                android:id="@+id/apellido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/nombreInvestigador"
+                android:layout_below="@id/nombreInvestigador"
+                android:textSize="@dimen/textSize_card" />
+
+            <TextView
+                android:id="@+id/linea1_investigador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/apellido"
+                android:layout_below="@+id/apellido"
+                android:textSize="@dimen/textSize_card" />
+
+            <TextView
+                android:id="@+id/linea2_investigador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/linea1_investigador"
+                android:layout_below="@+id/linea1_investigador"
+                android:textSize="@dimen/textSize_card" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical">
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="@dimen/width_linear2"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@color/android_green"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagen_detalle" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/contenido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imagen_detalle"
+                android:layout_width="@dimen/tamanio_imagen_width"
+                android:layout_height="@dimen/tamanio_imagen_height"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/white"
+                android:contentDescription=""
+                android:elevation="5dp"
+                android:src="@drawable/group"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RelativeLayout
+                android:id="@+id/linear1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart = "true"
+                android:layout_marginStart="10dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imagen_detalle">
+
+                <TextView
+                    android:id="@+id/txtNombre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="@dimen/marginEnd_detGrupo"
+                    android:layout_marginStart="@dimen/start_txt_detalleGrupo"
+                    android:layout_marginTop="@dimen/top_txt_detalleGrupo"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/textSize_detalle_grupo" />
+
+                <TextView
+                    android:id="@+id/txtSigla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/txtNombre"
+                    android:layout_below="@+id/txtNombre"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/textSize_detalle_grupo" />
+
+                <TextView
+                    android:id="@+id/txtEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/txtSigla"
+                    android:layout_below="@id/txtSigla"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/textSize_detalle_grupo" />
+
+                <TextView
+                    android:id="@+id/txtCategoria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/txtEmail"
+                    android:layout_below="@id/txtEmail"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/textSize_detalle_grupo" />
+
+                <TextView
+                    android:id="@+id/txtLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/txtCategoria"
+                    android:layout_below="@id/txtCategoria"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/textSize_detalle_grupo" />
+
+
+                <!-- Inician los textview de los titulos -->
+
+                <TextView
+                    android:id="@+id/nombre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/txtNombre"
+                    android:layout_marginLeft="@dimen/left_txt_detalleGrupo"
+                    android:text="@string/texto_nombre_IG"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_detalle_grupo"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/sigla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/nombre"
+                    android:layout_alignTop="@id/txtSigla"
+                    android:text="@string/texto_sigla"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_detalle_grupo"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/sigla"
+                    android:layout_alignTop="@id/txtEmail"
+                    android:text="@string/texto_email_IG"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_detalle_grupo"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/categoria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/email"
+                    android:layout_alignTop="@id/txtCategoria"
+                    android:text="@string/texto_categoria"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_detalle_grupo"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/categoria"
+                    android:layout_alignTop="@id/txtLink"
+                    android:text="@string/texto_link_cvlac"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_detalle_grupo"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</FrameLayout>

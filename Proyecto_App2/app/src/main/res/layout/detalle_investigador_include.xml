@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_datos_personales"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/fondo"
+        android:layout_width="@dimen/width_fondo_det_inv"
+        android:layout_height="match_parent"
+        android:background="@color/android_green"
+        app:layout_constraintBottom_toBottomOf="@+id/contenedorTxts"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/contenido"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imagen_detalle"
+                android:layout_width="@dimen/width_img_det_inv"
+                android:layout_height="@dimen/heigth_img_det_inv"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/gray"
+                android:contentDescription=""
+                android:elevation="5dp"
+                android:padding="1dp"
+                android:src="@drawable/investigador"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RelativeLayout
+                android:id="@+id/titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="@+id/imagen_detalle"
+                app:layout_constraintLeft_toRightOf="@+id/imagen_detalle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/titulo_datos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/linea"
+                    android:gravity="center"
+                    android:text="@string/datos_personales_inv"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/android_darkgreen"
+                    android:textSize="@dimen/textSize_titulos_detInv"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/linea"
+                    android:layout_width="@dimen/width_linea"
+                    android:layout_height="@dimen/heigth_linea"
+                    android:layout_below="@id/titulo_datos"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/android_darkgreen"
+                    android:gravity="center" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/contenedorTxts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/contenedor_marginStart"
+                android:layout_marginTop="14dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imagen_detalle">
+
+                <TextView
+                    android:id="@+id/txtNombre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="@dimen/txtE_marginEnd"
+                    android:layout_marginStart="@dimen/txtE_marginStart"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/textSize_txt" />
+
+                <TextView
+                    android:id="@+id/txtGenero"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/txtNombre"
+                    android:layout_below="@+id/txtNombre"
+                    android:layout_marginEnd="@dimen/txtE_marginEnd"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/textSize_txt" />
+
+                <TextView
+                    android:id="@+id/txtNacionalidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/txtGenero"
+                    android:layout_below="@id/txtGenero"
+                    android:layout_marginEnd="@dimen/txtE_marginEnd"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/textSize_txt" />
+
+                <TextView
+                    android:id="@+id/txtCategoria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/txtNacionalidad"
+                    android:layout_below="@id/txtNacionalidad"
+                    android:layout_marginEnd="@dimen/txtE_marginEnd"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/textSize_txt" />
+
+                <TextView
+                    android:id="@+id/txtEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/txtCategoria"
+                    android:layout_below="@id/txtCategoria"
+                    android:layout_marginEnd="@dimen/txtE_marginEnd"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/textSize_txt" />
+
+                <TextView
+                    android:id="@+id/txtLinkcvlac"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/txtEmail"
+                    android:layout_below="@id/txtEmail"
+                    android:layout_marginEnd="20pt"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/txtFormacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/txtLinkcvlac"
+                    android:layout_below="@id/txtLinkcvlac"
+                    android:layout_marginEnd="@dimen/txtE_marginEnd"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/textSize_txt" />
+
+
+                <TextView
+                    android:id="@+id/nombre_inv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/txtNombre"
+                    android:text="@string/texto_nombre_IG"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_txt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/genero_inv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/txtGenero"
+                    android:text="@string/genero_inv"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_txt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/nacionalidad_inv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/txtNacionalidad"
+                    android:text="@string/nacionalidad_inv"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_txt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/categoria_inv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/txtCategoria"
+                    android:text="@string/texto_categoria"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_txt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/email_inv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/txtEmail"
+                    android:text="@string/texto_email_IG"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_txt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/linkcvlac_inv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@id/txtLinkcvlac"
+                    android:text="@string/texto_link_cvlac"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_txt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/formacion_inv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@id/txtFormacion"
+                    android:layout_marginRight="@dimen/formacion_marginRight"
+                    android:text="@string/formacion_academica"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_txt"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</FrameLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nuevas_solicitudes"
+        android:icon="@drawable/ic_solicitudes"
+        android:orderInCategory="1"
+        android:title="@string/nuevas_solicitudes" />
+
+    <item
+        android:id="@+id/solicitudes_postergadas"
+        android:icon="@drawable/ic_posponer"
+        android:orderInCategory="2"
+        android:title="@string/solicitudes_postergadas" />
+
+
+    <item
+        android:id="@+id/cambiar_idioma"
+        android:icon="@drawable/ic_translate"
+        android:menuCategory="secondary"
+        android:orderInCategory="3"
+        android:title="@string/cambiar_idioma" />
+    <group
+        android:id="@+id/your_group2"
+        android:checkableBehavior="single"
+        android:menuCategory="secondary">
+
+        <item
+            android:id="@+id/espanol"
+            android:icon="@drawable/ico_english"
+            android:menuCategory="secondary"
+            android:orderInCategory="4"
+            android:title="@string/español"
+            android:visible="false" />
+        <item
+            android:id="@+id/ingles"
+            android:icon="@drawable/ico_spanish"
+            android:menuCategory="secondary"
+            android:orderInCategory="5"
+            android:title="@string/ingles"
+            android:visible="false" />
+    </group>
+
+
+    <item
+        android:id="@+id/item_cuenta"
+        android:icon="@drawable/ic_configuracion"
+        android:menuCategory="secondary"
+        android:orderInCategory="6"
+        android:title="@string/titulo_cuenta" />
+
+    <group
+        android:id="@+id/your_group"
+        android:checkableBehavior="single"
+        android:menuCategory="secondary">
+        <item
+            android:id="@+id/configurar_cuenta"
+            android:icon="@drawable/ic_edit"
+            android:orderInCategory="7"
+            android:title="@string/configurar_cuenta"
+            android:visible="false" />
+        <item
+            android:id="@+id/cerrar_sesion"
+            android:icon="@drawable/ic_close"
+            android:menuCategory="secondary"
+            android:orderInCategory="8"
+            android:title="@string/cerrar_sesion"
+            android:visible="false" />
+    </group>
+
+</menu>

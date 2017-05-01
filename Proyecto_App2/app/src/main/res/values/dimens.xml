@@ -1,0 +1,67 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="margin_top">0dp</dimen>
+    <dimen name="toolbar_text_size">25sp</dimen>
+    <dimen name="height_toolbar">35dp</dimen>
+
+    <!--Dimens detalle grupos-->
+    <dimen name="marginEnd_detGrupo">20pt</dimen>
+    <dimen name="margen_img">1dp</dimen>
+    <dimen name="margen_end_img">5dp</dimen>
+    <dimen name="tamanio_imagen_width">382dp</dimen>
+    <dimen name="tamanio_imagen_height">250dp</dimen>
+    <dimen name="width_linear2">135dp</dimen>
+    <dimen name="textSize_detalle_grupo">20sp</dimen>
+    <dimen name="textSize_card_grupos">17dp</dimen>
+    <dimen name="width_imagen_listaGrupos">100dp</dimen>
+    <dimen name="heigth_imagen_listaGrupos">100dp</dimen>
+    <dimen name="start_txt_detalleGrupo">140dp</dimen>
+    <dimen name="left_txt_detalleGrupo">5dp</dimen>
+    <dimen name="top_txt_detalleGrupo">10dp</dimen>
+    <dimen name="sigla_toolbar_top">5dp</dimen>
+
+    <dimen name="fab_size_mini">55dp</dimen>
+    <dimen name="fab_size_normal">65dp</dimen>
+
+    <!--Dimens Toolbar - Aviso conexión-->
+    <dimen name="textSize_toolbar">25sp</dimen>
+    <dimen name="textsize_aviso">30sp</dimen>
+
+    <!-- Dimens Detalle Investigador Datos-->
+    <dimen name="width_fondo_det_inv">160dp</dimen>
+    <dimen name="width_img_det_inv">190dp</dimen>
+    <dimen name="heigth_img_det_inv">190dp</dimen>
+    <dimen name="textSize_titulos_detInv">25sp</dimen>
+    <dimen name="width_linea">70pt</dimen>
+    <dimen name="heigth_linea">8dp</dimen>
+    <dimen name="contenedor_marginStart">20dp</dimen>
+    <dimen name="txtE_marginEnd">20pt</dimen>
+    <dimen name="txtE_marginStart">160dp</dimen>
+    <dimen name="textSize_txt">20sp</dimen>
+    <dimen name="formacion_marginRight">120pt</dimen>
+
+    <!--Dimens Editar perfil-->
+    <dimen name="textSize_titulo_Edit">40sp</dimen>
+    <dimen name="width_linea_titulos">250dp</dimen>
+
+    <!--Dimens fragment_inicio-->
+    <dimen name="textSize_titulo_inicio">30sp</dimen>
+    <dimen name="marginBottom_linea">35dp</dimen>
+    <dimen name="marginEnd_Buttons">20dp</dimen>
+
+    <!--Dimens grupos-investigadores-lineas-->
+    <dimen name="textSize_titulos_Det">25dp</dimen>
+    <dimen name="width_card_inicio">330dp</dimen>
+    <dimen name="marginTop_card_inicio">30dp</dimen>
+    <dimen name="width_linea_inicio">280dp</dimen>
+    <dimen name="textSize_card">17dp</dimen>
+    <dimen name="width_img_inv_det">100dp</dimen>
+    <dimen name="heigth_img_inv_det">100dp</dimen>
+    <dimen name="margin_str_nom_inv_det">10dp</dimen>
+
+    <!--Dimens Nav Header-->
+    <dimen name="height_nav_header">145dp</dimen>
+
+</resources>

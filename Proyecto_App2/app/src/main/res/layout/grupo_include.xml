@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/titulo_grupo"
+                android:textAlignment="center"
+                android:textColor="@color/android_darkgreen"
+                android:textSize="@dimen/textSize_titulos_Det" />
+
+            <RelativeLayout
+                android:layout_width="@dimen/width_linea_titulos"
+                android:layout_height="5dp"
+                android:layout_gravity="center"
+                android:background="@color/android_darkgreen" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/grupo_inv_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/mensaje_no_grupos"
+                android:padding="10dp"
+                android:textSize="@dimen/textSize_txt"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:text="@string/mensaje_inv_no_grupo"/>
+        </LinearLayout>
+    </FrameLayout>
+</ScrollView>

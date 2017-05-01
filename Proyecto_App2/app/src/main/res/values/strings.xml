@@ -1,0 +1,117 @@
+<resources>
+    <string name="app_name">CVUQ-Admin</string>
+
+    <!-- TODO: Remove or change this placeholder text
+    <string name="titulo_1">Descripción</string>
+    <string name="titulo_2">Líneas de investigación</string>
+    <string name="titulo_3">Investigadores</string>
+    <string name="titulo_principal">Detalle Grupo 1</string>
+    <string name="titulo_inicio">Inicio</string>
+    -->
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--String titulos detalle grupos e investigador
+    <string name="titulo_lider">Lider investigador</string>
+    <string name="titulo_integrantes">Integrantes</string>
+    <string name="titulo_lineas_investigación">Lineas de investigación</string>
+    <string name="datos_personales">Datos personales</string>
+    <string name="nombre_inv">Nombre</string>
+    <string name="genero_inv">Genero</string>
+    <string name="nacionalidad_inv">Nacionalidad</string>
+    <string name="categoria_inv">Categoria</string>
+    <string name="email_inv">Email</string>
+    <string name="link_cvlac">Link CVLAC</string>
+    <string name="formacion_academica">Formación académica</string>
+    <string name="titulo_grupo">Grupo de investigación</string>
+    <string name="editar_perfil">Editar perfil</string>
+    -->
+
+    <string name="bienvenido_cvuq">Bienvenido a CVUQ</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="aviso_conexion">La aplicación no cuenta con acceso a internet, por favor verifique su conexión</string>
+
+    <!--String textos fragmentos de editar, ingresar y registrar-->
+    <string name="registro">Registro</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="correo">Correo</string>
+    <string name="contasenia">Contraseña</string>
+    <string name="confirmar_contasenia">Confirmar contraseña</string>
+    <string name="contasenia_actual">Contraseña actual</string>
+    <string name="contrasenia_nueva">Contraseña nueva</string>
+    <string name="iniciar_sesion">Iniciar sesión en CVUQ</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="editar_perfil">Editar perfil</string>
+
+    <!-- Strings detalle de grupos e investigador -->
+    <string name="texto_nombre_IG">Nombre:</string>
+    <string name="texto_sigla">Sigla:</string>
+    <string name="texto_email_IG">Email:</string>
+    <string name="texto_categoria">Categoria:</string>
+    <string name="texto_link_cvlac">Link CVLAC:</string>
+    <string name="genero_inv">Genero</string>
+    <string name="nacionalidad_inv">Nacionalidad</string>
+    <string name="formacion_academica">Formación académica</string>
+    <string name="datos_personales_inv">Datos personales</string>
+
+    <!-- Strings títulos detalle -->
+    <string name="titulo_lider">Lider investigador</string>
+    <string name="titulo_integrantes">Integrantes</string>
+    <string name="titulo_lineas_investigación">Lineas de investigación</string>
+    <string name="titulo_grupo">Grupo de investigación</string>
+
+    <!-- Strings títulos menu-->
+    <string name="nuevas_solicitudes">Nuevas solicitudes</string>
+    <string name="solicitudes_postergadas">Solicitudes postergadas</string>
+    <string name="cambiar_idioma">Cambiar idioma</string>
+    <string name="español">Español</string>
+    <string name="ingles">Ingles</string>
+    <string name="configurar_cuenta">Configurar cuenta</string>
+    <string name="titulo_cuenta">Cuenta</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+
+    <!-- Strings titulos fragmentos -->
+    <string name="titulo_frag_inicio">Inicio</string>
+    <string name="titulo_frag_registro">Registro</string>
+    <string name="titulo_frag_solicutudes">Solicitudes</string>
+    <string name="titulo_frag_ingreso">Ingreso</string>
+    <string name="titulo_frag_solicitudes_pos">Solicitudes postergadas</string>
+    <string name="titulo_frag_editar">Perfil</string>
+    <string name="titulo_frag_perfil_investigador">Perfil del investigador</string>
+    <string name="titulo_frag_perfil_grupo">Perfil de grupos</string>
+
+    <!-- String mensajes de alerta -->
+    <string name="mensaje_alerta_sesion">El correo o la constraseña son incorrectos</string>
+    <string name="mensaje_inv_no_grupo">Este investigagor no posee grupos de investigación</string>
+    <string name="mensaje_inv_no_linea">Este investigagor no posee líneas de investigación</string>
+    <string name="mensaje_grup_no_inv">Este grupos no posee investigadores</string>
+    <string name="mensaje_grup_no_lider">Este grupos no posee lider</string>
+    <string name="mensaje_grup_no_linea">Este grupos no posee líneas de investigación</string>
+    <string name="sin_lineas">Sin lineas para mostrar</string>
+    <string name="mensaje_campos_vacios">Existen campos vacios</string>
+    <string name="mensaje_registro_correcto">El usuario fue registrado satisfactoriamente</string>
+    <string name="mensaje_alerta_contrasenias_erroneas">Las contraseñas no coinciden</string>
+    <string name="mensaje_alerta_edicion_correcta">La edición fue realizada correctamente</string>
+    <string name="mensaje_solicitud_aceptada">La solicitud ha sido aceptada</string>
+    <string name="mensaje_solicitud_postergada">La solicitud ha sido postergada</string>
+    <string name="mensaje_solicitud_eliminada">La solicitud fue eliminada</string>
+    <string name="mensaje_no_solicitudes">No exiten solicitudes para mostrar</string>
+
+
+    <!-- Strings etiquetas fragmentos -->
+    <string name="tag_fragment_editar">fragmentEditar</string>
+    <string name="tag_fragment_detalle_grupo">detalleGrupo</string>
+    <string name="tag_fragment_detalle_inv">detalleInvestigador</string>
+    <string name="tag_fragment_inicio">fragmentInicio</string>
+    <string name="tag_fragment_solicitudes">fragmentSolicitudes</string>
+    <string name="tag_fragment_postergadas">fragmentSolicitudesPostergadas</string>
+    <string name="tag_fragment_ingreso">fragmentIngreso</string>
+    <string name="tag_fragment_registro">fragmenRegistro</string>
+
+
+</resources>
