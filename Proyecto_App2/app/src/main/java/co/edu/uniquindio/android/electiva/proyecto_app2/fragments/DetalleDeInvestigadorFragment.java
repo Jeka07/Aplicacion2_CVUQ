@@ -209,7 +209,6 @@ public class DetalleDeInvestigadorFragment extends Fragment implements Adaptador
         }
         if (floatingAceptar.getId() == v.getId()) {
             onClickAceptar();
-            super.getActivity().onBackPressed();
         }
         if (floatingPosponer.getId() == v.getId()) {
             if (tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {

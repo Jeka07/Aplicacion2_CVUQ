@@ -101,6 +101,7 @@
     <string name="mensaje_solicitud_postergada">La solicitud ha sido postergada</string>
     <string name="mensaje_solicitud_eliminada">La solicitud fue eliminada</string>
     <string name="mensaje_no_solicitudes">No exiten solicitudes para mostrar</string>
+    <string name="mensaje_solicitud_ya_postergada">La solicitud ya se encuentra en la lista de solicitudes postergadas</string>
 
 
     <!-- Strings etiquetas fragmentos -->

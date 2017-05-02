@@ -17,10 +17,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.AvisoConexionFragment;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.RegistroFragment;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.IngresoFragment;
+import co.edu.uniquindio.android.electiva.proyecto_app2.util.SolicitudesData;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
 
 /**
@@ -35,11 +39,12 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
 public class MainActivity extends AppCompatActivity implements IngresoFragment.OnButtonListener,
         RegistroFragment.OnButtonRegistrarListener {
 
-
     public static final String ADMINISTRADOR = "administrador";
     public static final String LISTA_ADMINISTRADORES = "administradores";
+    @BindView(R.id.titulo_activity_main)
+    protected TextView tituloActicity;
+    private Unbinder unbinder;
 
-    TextView tituloActicity;
     Fragment fragmentoActual;
     public Boolean fragmentoNuevo;
     String etiqueta;
@@ -54,9 +59,8 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-        tituloActicity = (TextView) findViewById(R.id.titulo_activity_main);
+        unbinder = ButterKnife.bind(this);
         if (!isInternetAccess()) {
             final AvisoConexionFragment aviso = new AvisoConexionFragment();
             aviso.setStyle(aviso.STYLE_NO_TITLE, R.style.CardView);
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         llenarAdministradores(extras);
+        SolicitudesData.administradores = administradores;
 
         fragmentoNuevo = false;
         if (savedInstanceState == null) {
@@ -148,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
         }
         fragmentoActual = fragment;
         titulo_fragmento = contextName;
-        //   tituloActicity.setText(titulo_fragmento);
+        tituloActicity.setText(titulo_fragmento);
     }
 
     /**
@@ -291,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
     }
 
     /**
-     * Metodo que se encarga de verificar si existe conexión a internet
+     * Método que se encarga de verificar si existe conexión a internet
      *
      * @return true si el dispositivo cuenta con acceso a internet, false en caso contrario
      */

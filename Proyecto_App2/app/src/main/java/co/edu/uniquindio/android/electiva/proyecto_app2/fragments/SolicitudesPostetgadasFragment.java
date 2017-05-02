@@ -227,7 +227,7 @@ public class SolicitudesPostetgadasFragment extends Fragment implements Adaptado
         SolicitudesData.solicitudesPostergadas.remove(object);
         llenarListas();
         AdminActivity adminActivity = (AdminActivity) getActivity();
-        String mensaje = getResources().getString(R.string.mensaje_solicitud_aceptada);
+        String mensaje = getResources().getString(R.string.mensaje_solicitud_eliminada);
         adminActivity.mostrarAlerta(mensaje);
         try {
             if (getView().findViewById(R.id.vista_detalle_grupo_inv) != null) {

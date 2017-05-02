@@ -9,6 +9,7 @@
     <dimen name="width_card_inicio">280dp</dimen>
     <dimen name="padding_card_inicio">10dp</dimen>
     <dimen name="width_linea_inicio">230dp</dimen>
+    <dimen name="marginTop_inicio">40dp</dimen>
 
     <!-- Dimens fragment ingreso -->
     <dimen name="textSize_titulo_ingreso">40sp</dimen>

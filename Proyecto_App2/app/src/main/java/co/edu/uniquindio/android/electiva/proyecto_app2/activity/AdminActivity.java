@@ -22,6 +22,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.DetalleDeGrupoFragment;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.DetalleDeInvestigadorFragment;
@@ -51,15 +54,22 @@ public class AdminActivity extends AppCompatActivity implements
         EditarPerfilFragment.OnButtonEditListener, SolicitudesPostetgadasFragment.OnIntegranteSeleccionadoListenerPost,
         SolicitudesPostetgadasFragment.OnGrupoSeleccionadoListenerPost {
 
-    DrawerLayout mDrawerLayout;
-    NavigationView mNavigationView;
+    @BindView(R.id.drawerLayout)
+    protected DrawerLayout mDrawerLayout;
+    @BindView(R.id.navigation_view)
+    protected NavigationView mNavigationView;
+    @BindView(R.id.toolbar_admin)
+    protected Toolbar toolbar;
+    @BindView(R.id.toolbar_title)
+    protected TextView tituloFragmento;
+    private Unbinder unbinder;
+
     FragmentManager mFragmentManager;
     Fragment fragmentoActual;
     public Boolean fragmentRestaurado;
     String etiqueta;
     int titulo_fragmento;
-    Toolbar toolbar;
-    TextView tituloFragmento;
+
     Administrador administrador;
     ArrayList<Administrador> administradores;
     int posAdmin;
@@ -83,20 +93,16 @@ public class AdminActivity extends AppCompatActivity implements
 
         administradores = SolicitudesData.administradores;
         administrador = administradores.get(posAdmin);
+        unbinder = ButterKnife.bind(this);
 
-        Log.d("Nombre", administrador.getNombre());
-
-        mDrawerLayout = (DrawerLayout) findViewById(drawerLayout);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_admin);
-        tituloFragmento = (TextView) findViewById(R.id.toolbar_title);
 
         View view = mNavigationView.getHeaderView(0);
         view.setOnClickListener(this);
 
         fragmentRestaurado = false;
         mFragmentManager = getSupportFragmentManager();
+
 
         if (savedInstanceState == null) {
             etiqueta = getResources().getString(R.string.tag_fragment_inicio);
@@ -453,6 +459,7 @@ public class AdminActivity extends AppCompatActivity implements
         TextView mensaje = (TextView) layout.findViewById(R.id.txtMensaje);
         mensaje.setText(textoMensaje);
         toast.setDuration(Toast.LENGTH_SHORT);
+        unbinder = ButterKnife.bind(layout);
         toast.setView(layout);
         toast.show();
     }

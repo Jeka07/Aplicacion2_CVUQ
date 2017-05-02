@@ -21,6 +21,7 @@ import com.sa90.materialarcmenu.ArcMenu;
 
 import java.util.ArrayList;
 
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.AdminActivity;
 import co.edu.uniquindio.android.electiva.proyecto_app2.util.AdaptadorDeInvestigador;
@@ -40,30 +41,30 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Investigador;
 public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea.OnClickAdaptadorDeLinea,
         AdaptadorDeInvestigador.OnClickAdaptadorDeIntegrante, View.OnClickListener {
 
-    TextView txtNombre;
-    TextView txtSigla;
-    TextView txtEmail;
-    TextView txtCategoria;
-    TextView txtLink;
+    protected TextView txtNombre;
+    protected TextView txtSigla;
+    protected TextView txtEmail;
+    protected TextView txtCategoria;
+    protected TextView txtLink;
+    protected RecyclerView listadoIntegrantes;
+    protected RecyclerView listadoLineas;
+    protected TextView msjNoLineaGrup;
+    protected TextView msjNoInv;
+    protected TextView msjNoLider;
+    protected Unbinder unbinder;
+
     Grupo grupo;
 
     AdaptadorDeInvestigador adaptadorInvestigador;
-    RecyclerView listadoIntegrantes;
     Investigador lider_investigador;
     ArrayList<Investigador> investigadores;
 
     AdaptadorDeLinea adaptador;
-    RecyclerView listadoLineas;
     ArrayList<String> lineas;
 
     ArcMenu arcMenuAndroid;
     FloatingActionButton floatingEliminar,
             floatingAceptar, floatingPosponer;
-
-    private TextView msjNoLineaGrup;
-    private TextView msjNoInv;
-    private TextView msjNoLider;
-
 
     private FloatingActionButton btnFAB;
     private Boolean click = false;
@@ -213,7 +214,7 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
                 listaDeSolicitudesFragment.postergarItem(grupo);
             } else {
                 AdminActivity adminActivity = (AdminActivity) getActivity();
-                String mensaje = getResources().getString(R.string.mensaje_solicitud_postergada);
+                String mensaje = getResources().getString(R.string.mensaje_solicitud_ya_postergada);
                 adminActivity.mostrarAlerta(mensaje);
             }
         }

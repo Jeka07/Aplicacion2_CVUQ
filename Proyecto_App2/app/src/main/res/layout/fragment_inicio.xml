@@ -8,9 +8,8 @@
 
     <ImageView
         android:id="@+id/imagen_detalle"
-        android:layout_width="@dimen/tamanio_imagen_inicio_width"
-        android:layout_height="@dimen/tamanio_imagen_inicio_height"
-        android:layout_marginTop="@dimen/marginTop_inicio"
+        android:layout_width="@dimen/tamanio_imagen_width"
+        android:layout_height="@dimen/tamanio_imagen_height"
         android:background="@color/white"
         android:contentDescription=""
         android:elevation="5dp"
@@ -19,7 +18,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="@dimen/width_card_inicio"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/marginTop_card_ingreso"
+        android:layout_marginTop="@dimen/marginTop_inicio"
         android:padding="4dp"
         card_view:cardBackgroundColor="@color/android_green"
         card_view:cardCornerRadius="20dp"
@@ -41,7 +40,7 @@
                 android:text="@string/bienvenido"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_bienvenida"
+                android:textSize="50sp"
                 android:typeface="sans"/>
 
             <TextView
@@ -50,12 +49,12 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_bienvenida"
+                android:textSize="50sp"
                 android:typeface="sans"/>
 
             <RelativeLayout
                 android:layout_width="@dimen/width_linea_inicio"
-                android:layout_height="6dp"
+                android:layout_height="8dp"
                 android:background="@color/white" />
 
         </LinearLayout>
