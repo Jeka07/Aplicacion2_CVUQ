@@ -206,19 +206,19 @@ public class ListaDeSolicitudesFragment extends Fragment implements AdaptadorDeG
      *
      * @param object objeto a ser eliminado
      */
-    public void eliminarItem(Object object) {
+    public boolean eliminarItem(Object object) {
+        boolean catchR = false;
         SolicitudesData.solicitudesNuevas.remove(object);
         llenarListas();
-        AdminActivity adminActivity = (AdminActivity) getActivity();
-        String mensaje = getResources().getString(R.string.mensaje_solicitud_eliminada);
-        adminActivity.mostrarAlerta(mensaje);
         try {
             if (getView().findViewById(R.id.vista_detalle_grupo_inv) != null) {
                 getFragmentManager().beginTransaction().detach(this).
                         attach(this).commit();
             }
+            return catchR;
         } catch (NullPointerException e) {
-            super.getActivity().onBackPressed();
+            catchR = true;
+            return catchR;
         }
     }
 
@@ -227,20 +227,20 @@ public class ListaDeSolicitudesFragment extends Fragment implements AdaptadorDeG
      *
      * @param object objeto a ser postergado
      */
-    public void postergarItem(Object object) {
+    public boolean postergarItem(Object object) {
         SolicitudesData.solicitudesNuevas.remove(object);
         llenarListas();
         SolicitudesData.solicitudesPostergadas.add(object);
-        AdminActivity adminActivity = (AdminActivity) getActivity();
-        String mensaje = getResources().getString(R.string.mensaje_solicitud_postergada);
-        adminActivity.mostrarAlerta(mensaje);
+        boolean catchR = false;
         try {
             if (getView().findViewById(R.id.vista_detalle_grupo_inv) != null) {
                 getFragmentManager().beginTransaction().detach(this).
                         attach(this).commit();
             }
+            return catchR;
         } catch (NullPointerException e) {
-            super.getActivity().onBackPressed();
+            catchR = true;
+            return catchR;
         }
     }
 
@@ -249,19 +249,19 @@ public class ListaDeSolicitudesFragment extends Fragment implements AdaptadorDeG
      *
      * @param object objeto a ser aceptar
      */
-    public void aceptarItem(Object object) {
+    public boolean aceptarItem(Object object) {
         SolicitudesData.solicitudesNuevas.remove(object);
         llenarListas();
-        AdminActivity adminActivity = (AdminActivity) getActivity();
-        String mensaje = getResources().getString(R.string.mensaje_solicitud_aceptada);
-        adminActivity.mostrarAlerta(mensaje);
+        boolean catchR = false;
         try {
             if (getView().findViewById(R.id.vista_detalle_grupo_inv) != null) {
                 getFragmentManager().beginTransaction().detach(this).
                         attach(this).commit();
             }
+            return catchR;
         } catch (NullPointerException e) {
-            super.getActivity().onBackPressed();
+            catchR = true;
+            return catchR;
         }
     }
 
@@ -281,6 +281,5 @@ public class ListaDeSolicitudesFragment extends Fragment implements AdaptadorDeG
             }
         }
     }
-
 
 }

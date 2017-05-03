@@ -3,13 +3,13 @@
 
     <!--Dimens fragment_inicio-->
     <dimen name="text_size_bienvenida">70sp</dimen>
-    <dimen name="tamanio_imagen_inicio_width">582dp</dimen>
-    <dimen name="tamanio_imagen_inicio_height">350dp</dimen>
+    <dimen name="tamanio_imagen_width">600dp</dimen>
+    <dimen name="tamanio_imagen_height">420dp</dimen>
     <dimen name="marginRigth_imagen_inicio">70dp</dimen>
-    <dimen name="width_card_inicio">450dp</dimen>
+    <dimen name="width_card_inicio">420dp</dimen>
     <dimen name="padding_card_inicio">10dp</dimen>
-    <dimen name="width_linea_inicio">230dp</dimen>
-    <dimen name="marginTop_inicio">70dp</dimen>
+    <dimen name="width_linea_inicio">330dp</dimen>
+    <dimen name="marginTop_inicio">120dp</dimen>
 
     <!-- Dimens fragment ingreso -->
     <dimen name="textSize_titulo_ingreso">50sp</dimen>
@@ -39,7 +39,7 @@
     <dimen name="textSize_actualizar_button_text">27sp</dimen>
 
     <!--Dimens listas (Grupos - Investigadores) -->
-    <dimen name="textSize_datos_card">35sp</dimen>
+    <dimen name="textSize_datos_card">28sp</dimen>
     <dimen name="size_imagen_listasGI_width">170dp</dimen>
     <dimen name="size_imagen_listasGI_heigth">170dp</dimen>
     <dimen name="marginStart_datos_card">10dp</dimen>
@@ -54,13 +54,13 @@
     <dimen name="marginStart_textos_detalleGrupo">195dp</dimen>
 
     <!-- Dimens detalles (Grupos -Investigadores) -->
-    <dimen name="textSize_mensajes_fragmentos">40sp</dimen>
+    <dimen name="textSize_mensajes_fragmentos">35sp</dimen>
     <dimen name="width_linea_titulos">350dp</dimen>
-    <dimen name="textSize_titulos_Detalle">50dp</dimen>
+    <dimen name="textSize_titulos_Detalle">35dp</dimen>
 
     <!-- Dimens Detalle Investigador-->
     <dimen name="width_relative_fondo">280dp</dimen>
-    <dimen name="textSize_detalle_inves">40sp</dimen>
+    <dimen name="textSize_detalle_inves">30sp</dimen>
     <dimen name="marginStart_texto_detalle_inv">290dp</dimen>
     <dimen name="width_texto_datos_per">500dp</dimen>
     <dimen name="width_imagen_detalle_inv">350dp</dimen>

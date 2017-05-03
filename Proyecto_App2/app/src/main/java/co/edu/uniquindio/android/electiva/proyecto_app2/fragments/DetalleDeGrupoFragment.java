@@ -26,6 +26,7 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.AdminActivity;
 import co.edu.uniquindio.android.electiva.proyecto_app2.util.AdaptadorDeInvestigador;
 import co.edu.uniquindio.android.electiva.proyecto_app2.util.AdaptadorDeLinea;
+import co.edu.uniquindio.android.electiva.proyecto_app2.util.SolicitudesData;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Grupo;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Investigador;
 
@@ -209,13 +210,20 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
         if (floatingPosponer.getId() == v.getId()) {
             if (tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {
                 String tag = getResources().getString(R.string.tag_fragment_solicitudes);
+                boolean resultado = true;
+                AdminActivity adminActivity = (AdminActivity) getActivity();
                 ListaDeSolicitudesFragment listaDeSolicitudesFragment = (ListaDeSolicitudesFragment) getActivity()
                         .getSupportFragmentManager().findFragmentByTag(tag);
-                listaDeSolicitudesFragment.postergarItem(grupo);
+                String mensaje = getResources().getString(R.string.mensaje_solicitud_postergada);
+                adminActivity.mostrarAlerta(mensaje, getContext());
+                resultado = listaDeSolicitudesFragment.postergarItem(grupo);
+                if (resultado) {
+                    adminActivity.onBackPressed();
+                }
             } else {
                 AdminActivity adminActivity = (AdminActivity) getActivity();
                 String mensaje = getResources().getString(R.string.mensaje_solicitud_ya_postergada);
-                adminActivity.mostrarAlerta(mensaje);
+                adminActivity.mostrarAlerta(mensaje, getContext());
             }
         }
         if (btnFAB.getId() == v.getId()) {
@@ -244,33 +252,54 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
      * Método que se encarga de eliminar una solicitud de la lista correspondiente
      */
     private void onClickEliminar() {
+        boolean resultado = true;
+        AdminActivity adminAc = (AdminActivity) getActivity();
+        String mensaje = getResources().getString(R.string.mensaje_solicitud_eliminada);
+
         if (tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {
             String tag = getResources().getString(R.string.tag_fragment_solicitudes);
             ListaDeSolicitudesFragment listaDeSolicitudesFragment = (ListaDeSolicitudesFragment) getActivity()
                     .getSupportFragmentManager().findFragmentByTag(tag);
-            listaDeSolicitudesFragment.eliminarItem(grupo);
+            adminAc.mostrarAlerta(mensaje, getContext());
+            resultado = listaDeSolicitudesFragment.eliminarItem(grupo);
+
         } else {
             String tag = getResources().getString(R.string.tag_fragment_postergadas);
             SolicitudesPostetgadasFragment solicitudesPostetgadasFragment = (SolicitudesPostetgadasFragment) getActivity()
                     .getSupportFragmentManager().findFragmentByTag(tag);
-            solicitudesPostetgadasFragment.eliminarItem(grupo);
+            adminAc.mostrarAlerta(mensaje, getContext());
+            resultado = solicitudesPostetgadasFragment.eliminarItem(grupo);
         }
+        if (resultado) {
+            adminAc.onBackPressed();
+        }
+
     }
 
     /**
      * Método que se encarga de aceptar una solicitud de la lista correspondiente
      */
     private void onClickAceptar() {
+        boolean resultado = true;
+        AdminActivity adminAc = (AdminActivity) getActivity();
+        String mensaje = getResources().getString(R.string.mensaje_solicitud_aceptada);
+
         if (tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {
             String tag = getResources().getString(R.string.tag_fragment_solicitudes);
             ListaDeSolicitudesFragment listaDeSolicitudesFragment = (ListaDeSolicitudesFragment) getActivity()
                     .getSupportFragmentManager().findFragmentByTag(tag);
-            listaDeSolicitudesFragment.aceptarItem(grupo);
+            adminAc.mostrarAlerta(mensaje, getContext());
+            resultado = listaDeSolicitudesFragment.aceptarItem(grupo);
+
         } else {
             String tag = getResources().getString(R.string.tag_fragment_postergadas);
             SolicitudesPostetgadasFragment solicitudesPostetgadasFragment = (SolicitudesPostetgadasFragment) getActivity()
                     .getSupportFragmentManager().findFragmentByTag(tag);
-            solicitudesPostetgadasFragment.aceptarItem(grupo);
+            adminAc.mostrarAlerta(mensaje, getContext());
+            resultado = solicitudesPostetgadasFragment.aceptarItem(grupo);
+        }
+        if (resultado) {
+            adminAc.onBackPressed();
         }
     }
 
@@ -282,5 +311,6 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
     @Override
     public void onClickPositionIntegrante(int pos) {
     }
+
 
 }

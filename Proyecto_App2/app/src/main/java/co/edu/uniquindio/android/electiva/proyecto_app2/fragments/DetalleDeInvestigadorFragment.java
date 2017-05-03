@@ -213,13 +213,20 @@ public class DetalleDeInvestigadorFragment extends Fragment implements Adaptador
         if (floatingPosponer.getId() == v.getId()) {
             if (tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {
                 String tag = getResources().getString(R.string.tag_fragment_solicitudes);
+                boolean resultado = true;
+                AdminActivity adminActivity = (AdminActivity) getActivity();
                 ListaDeSolicitudesFragment listaDeSolicitudesFragment = (ListaDeSolicitudesFragment) getActivity()
                         .getSupportFragmentManager().findFragmentByTag(tag);
-                listaDeSolicitudesFragment.postergarItem(investigador);
+                String mensaje = getResources().getString(R.string.mensaje_solicitud_postergada);
+                adminActivity.mostrarAlerta(mensaje, getContext());
+                resultado = listaDeSolicitudesFragment.postergarItem(investigador);
+                if (resultado) {
+                    adminActivity.onBackPressed();
+                }
             } else {
                 AdminActivity adminActivity = (AdminActivity) getActivity();
-                String mensaje = getResources().getString(R.string.mensaje_solicitud_postergada);
-                adminActivity.mostrarAlerta(mensaje);
+                String mensaje = getResources().getString(R.string.mensaje_solicitud_ya_postergada);
+                adminActivity.mostrarAlerta(mensaje,getContext());
             }
         }
         if (btnFAB.getId() == v.getId()) {
@@ -248,17 +255,26 @@ public class DetalleDeInvestigadorFragment extends Fragment implements Adaptador
      * Método que se encarga de eliminar una solicitud de la lista correspondiente
      */
     private void onClickEliminar() {
+        boolean resultado = true;
+        AdminActivity adminAc = (AdminActivity) getActivity();
+        String mensaje = getResources().getString(R.string.mensaje_solicitud_eliminada);
+
         if (tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {
             String tag = getResources().getString(R.string.tag_fragment_solicitudes);
             ListaDeSolicitudesFragment listaDeSolicitudesFragment = (ListaDeSolicitudesFragment) getActivity()
                     .getSupportFragmentManager().findFragmentByTag(tag);
-            listaDeSolicitudesFragment.eliminarItem(investigador);
+            adminAc.mostrarAlerta(mensaje, getContext());
+            resultado = listaDeSolicitudesFragment.eliminarItem(investigador);
 
         } else {
             String tag = getResources().getString(R.string.tag_fragment_postergadas);
             SolicitudesPostetgadasFragment solicitudesPostetgadasFragment = (SolicitudesPostetgadasFragment) getActivity()
                     .getSupportFragmentManager().findFragmentByTag(tag);
-            solicitudesPostetgadasFragment.eliminarItem(investigador);
+            adminAc.mostrarAlerta(mensaje, getContext());
+            resultado = solicitudesPostetgadasFragment.eliminarItem(investigador);
+        }
+        if (resultado) {
+            adminAc.onBackPressed();
         }
     }
 
@@ -266,16 +282,26 @@ public class DetalleDeInvestigadorFragment extends Fragment implements Adaptador
      * Método que se encarga de aceptar una solicitud de la lista correspondiente
      */
     private void onClickAceptar() {
+        boolean resultado = true;
+        AdminActivity adminAc = (AdminActivity) getActivity();
+        String mensaje = getResources().getString(R.string.mensaje_solicitud_aceptada);
+
         if (tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {
             String tag = getResources().getString(R.string.tag_fragment_solicitudes);
             ListaDeSolicitudesFragment listaDeSolicitudesFragment = (ListaDeSolicitudesFragment) getActivity()
                     .getSupportFragmentManager().findFragmentByTag(tag);
-            listaDeSolicitudesFragment.aceptarItem(investigador);
+            adminAc.mostrarAlerta(mensaje, getContext());
+            resultado = listaDeSolicitudesFragment.aceptarItem(investigador);
+
         } else {
             String tag = getResources().getString(R.string.tag_fragment_postergadas);
             SolicitudesPostetgadasFragment solicitudesPostetgadasFragment = (SolicitudesPostetgadasFragment) getActivity()
                     .getSupportFragmentManager().findFragmentByTag(tag);
-            solicitudesPostetgadasFragment.aceptarItem(investigador);
+            adminAc.mostrarAlerta(mensaje, getContext());
+            resultado = solicitudesPostetgadasFragment.aceptarItem(investigador);
+        }
+        if (resultado) {
+            adminAc.onBackPressed();
         }
     }
 

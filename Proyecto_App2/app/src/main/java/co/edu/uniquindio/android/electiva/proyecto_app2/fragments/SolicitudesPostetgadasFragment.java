@@ -223,19 +223,19 @@ public class SolicitudesPostetgadasFragment extends Fragment implements Adaptado
      *
      * @param object objeto a ser eliminado
      */
-    public void eliminarItem(Object object) {
+    public boolean eliminarItem(Object object) {
         SolicitudesData.solicitudesPostergadas.remove(object);
         llenarListas();
-        AdminActivity adminActivity = (AdminActivity) getActivity();
-        String mensaje = getResources().getString(R.string.mensaje_solicitud_eliminada);
-        adminActivity.mostrarAlerta(mensaje);
+        boolean catchR = false;
         try {
             if (getView().findViewById(R.id.vista_detalle_grupo_inv) != null) {
                 getFragmentManager().beginTransaction().detach(this).
                         attach(this).commit();
             }
+            return catchR;
         } catch (NullPointerException e) {
-            super.getActivity().onBackPressed();
+            catchR = true;
+            return catchR;
         }
     }
 
@@ -244,19 +244,19 @@ public class SolicitudesPostetgadasFragment extends Fragment implements Adaptado
      *
      * @param object objeto a ser aceptado
      */
-    public void aceptarItem(Object object) {
+    public boolean aceptarItem(Object object) {
         SolicitudesData.solicitudesPostergadas.remove(object);
         llenarListas();
-        AdminActivity adminActivity = (AdminActivity) getActivity();
-        String mensaje = getResources().getString(R.string.mensaje_solicitud_aceptada);
-        adminActivity.mostrarAlerta(mensaje);
+        boolean catchR = false;
         try {
             if (getView().findViewById(R.id.vista_detalle_grupo_inv) != null) {
                 getFragmentManager().beginTransaction().detach(this).
                         attach(this).commit();
             }
+            return catchR;
         } catch (NullPointerException e) {
-            super.getActivity().onBackPressed();
+            catchR = true;
+            return catchR;
         }
     }
 }

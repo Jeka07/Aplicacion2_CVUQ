@@ -39,6 +39,7 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
 public class MainActivity extends AppCompatActivity implements IngresoFragment.OnButtonListener,
         RegistroFragment.OnButtonRegistrarListener {
 
+    SolicitudesData sd = new SolicitudesData();
     public static final String ADMINISTRADOR = "administrador";
     public static final String LISTA_ADMINISTRADORES = "administradores";
     @BindView(R.id.titulo_activity_main)

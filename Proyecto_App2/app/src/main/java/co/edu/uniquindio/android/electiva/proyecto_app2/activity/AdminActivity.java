@@ -1,5 +1,6 @@
 package co.edu.uniquindio.android.electiva.proyecto_app2.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -92,6 +93,7 @@ public class AdminActivity extends AppCompatActivity implements
         posAdmin = extras.getInt("posicion");
 
         administradores = SolicitudesData.administradores;
+        Log.d("tam",administradores.size()+" bu");
         administrador = administradores.get(posAdmin);
         unbinder = ButterKnife.bind(this);
 
@@ -417,7 +419,7 @@ public class AdminActivity extends AppCompatActivity implements
             inicioFragment.setArguments(bundle);
             dibujarFragmento(inicioFragment, R.string.titulo_frag_inicio, tag);
         } else {
-            mostrarAlerta(mensaje);
+            mostrarAlerta(mensaje,getApplicationContext());
             EditarPerfilFragment editarPerfilFragment = new EditarPerfilFragment();
             Bundle bundle = new Bundle();
             bundle.putParcelable("admin", admin);
@@ -451,8 +453,8 @@ public class AdminActivity extends AppCompatActivity implements
      *
      * @param textoMensaje mensaje de alerta a mostrar
      */
-    public void mostrarAlerta(String textoMensaje) {
-        Toast toast = new Toast(getApplicationContext());
+    public void mostrarAlerta(String textoMensaje, Context context) {
+        Toast toast = new Toast(context);
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.mensaje,
                 (ViewGroup) findViewById(R.id.lytLayout));
