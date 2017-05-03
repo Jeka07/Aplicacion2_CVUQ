@@ -50,9 +50,12 @@ import static co.edu.uniquindio.android.electiva.proyecto_app2.R.id.drawerLayout
  * @version 1.0
  */
 public class AdminActivity extends AppCompatActivity implements
-        View.OnClickListener, ListaDeSolicitudesFragment.OnIntegranteSeleccionadoListener,
-        ListaDeSolicitudesFragment.OnGrupoSeleccionadoListener, NavigationView.OnNavigationItemSelectedListener,
-        EditarPerfilFragment.OnButtonEditListener, SolicitudesPostetgadasFragment.OnIntegranteSeleccionadoListenerPost,
+        View.OnClickListener,
+        ListaDeSolicitudesFragment.OnIntegranteSeleccionadoListener,
+        ListaDeSolicitudesFragment.OnGrupoSeleccionadoListener,
+        NavigationView.OnNavigationItemSelectedListener,
+        EditarPerfilFragment.OnButtonEditListener,
+        SolicitudesPostetgadasFragment.OnIntegranteSeleccionadoListenerPost,
         SolicitudesPostetgadasFragment.OnGrupoSeleccionadoListenerPost {
 
     @BindView(R.id.drawerLayout)
@@ -79,7 +82,7 @@ public class AdminActivity extends AppCompatActivity implements
     public static final String SOLICITUDES_POST = "postergadas";
 
     /**
-     * Método que se ejecuta en la creación de la actividad
+     * Método que se ejecuta en la creación de la actividad actual
      *
      * @param savedInstanceState permite recuperar la configuración almacenada
      */
@@ -93,7 +96,7 @@ public class AdminActivity extends AppCompatActivity implements
         posAdmin = extras.getInt("posicion");
 
         administradores = SolicitudesData.administradores;
-        Log.d("tam",administradores.size()+" bu");
+        Log.d("tam", administradores.size() + " bu");
         administrador = administradores.get(posAdmin);
         unbinder = ButterKnife.bind(this);
 
@@ -127,7 +130,7 @@ public class AdminActivity extends AppCompatActivity implements
 
 
     /**
-     * Método que captura los eventos de selección sobre el menu
+     * Método que captura los eventos de selección sobre el menú de opciones
      *
      * @param menuItem Elemento que contiene el menu con el item seleccionado
      * @return true
@@ -419,7 +422,7 @@ public class AdminActivity extends AppCompatActivity implements
             inicioFragment.setArguments(bundle);
             dibujarFragmento(inicioFragment, R.string.titulo_frag_inicio, tag);
         } else {
-            mostrarAlerta(mensaje,getApplicationContext());
+            mostrarAlerta(mensaje, getApplicationContext());
             EditarPerfilFragment editarPerfilFragment = new EditarPerfilFragment();
             Bundle bundle = new Bundle();
             bundle.putParcelable("admin", admin);
