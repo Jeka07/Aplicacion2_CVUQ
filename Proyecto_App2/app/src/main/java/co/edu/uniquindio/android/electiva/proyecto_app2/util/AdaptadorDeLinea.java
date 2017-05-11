@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 
 
@@ -88,7 +91,10 @@ public class AdaptadorDeLinea extends RecyclerView.Adapter<AdaptadorDeLinea.Line
      */
     public static class LineaViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView txtLinea;
+        @BindView(R.id.linea_investigacion)
+        protected TextView txtLinea;
+
+        protected Unbinder unbinder;
 
         /**
          * Método constructor que se encarga de inicializar los valores
@@ -97,8 +103,7 @@ public class AdaptadorDeLinea extends RecyclerView.Adapter<AdaptadorDeLinea.Line
          */
         public LineaViewHolder(View itemView) {
             super(itemView);
-            txtLinea = (TextView)
-                    itemView.findViewById(R.id.linea_investigacion);
+            unbinder = ButterKnife.bind(this,itemView);
         }
 
         /**

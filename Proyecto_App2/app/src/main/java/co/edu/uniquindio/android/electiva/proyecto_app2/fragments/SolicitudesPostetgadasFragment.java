@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.AdminActivity;
 import co.edu.uniquindio.android.electiva.proyecto_app2.util.AdaptadorDeGrupoPostergados;
@@ -34,16 +37,23 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Investigador;
 public class SolicitudesPostetgadasFragment extends Fragment implements AdaptadorDeGrupoPostergados.OnClickAdaptadorDeGrupo,
         AdaptadorDeInvestigadorPostergados.OnClickAdaptadorDeIntegrante {
 
-    AdaptadorDeGrupoPostergados adaptador;
-    RecyclerView listadoGrupos;
-    ArrayList<Grupo> grupos;
+    private AdaptadorDeGrupoPostergados adaptador;
+    @BindView(R.id.lista_investigadores_1)
+    protected RecyclerView listadoGrupos;
+    private ArrayList<Grupo> grupos;
     private OnGrupoSeleccionadoListenerPost listener;
 
-    AdaptadorDeInvestigadorPostergados adaptadorDeInvestigador;
-    RecyclerView listadoInvestigadores;
-    ArrayList<Investigador> investigadores;
+    private AdaptadorDeInvestigadorPostergados adaptadorDeInvestigador;
+    @BindView(R.id.lista_grupos_1)
+    protected RecyclerView listadoInvestigadores;
+    private ArrayList<Investigador> investigadores;
     private OnIntegranteSeleccionadoListenerPost listenerInvestigador1;
-    AdminActivity adminActivity;
+    private AdminActivity adminActivity;
+
+    @BindView(R.id.mensaje_solicitudes_post)
+    protected TextView mensaje;
+
+    protected Unbinder unbinder;
 
     /**
      * Método constructor del fragmento
@@ -65,8 +75,9 @@ public class SolicitudesPostetgadasFragment extends Fragment implements Adaptado
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_solicitudes, container, false);
+        View v = inflater.inflate(R.layout.fragment_solicitudes, container, false);
+        unbinder = ButterKnife.bind(this,v);
+        return v;
     }
 
     /**
@@ -79,16 +90,13 @@ public class SolicitudesPostetgadasFragment extends Fragment implements Adaptado
         super.onActivityCreated(savedInstanceState);
         adminActivity = (AdminActivity) getActivity();
         String mensajeVacio = "";
-        TextView mensaje = (TextView) getView().findViewById(R.id.mensaje_solicitudes_post);
         mensaje.setVisibility(View.INVISIBLE);
         if (grupos.size() != 0 || investigadores.size() != 0) {
             if (grupos.size() != 0) {
-                listadoGrupos = (RecyclerView) getView().findViewById(R.id.lista_grupos_1);
                 adaptador = new AdaptadorDeGrupoPostergados(grupos, this);
                 listadoGrupos.setAdapter(adaptador);
                 listadoGrupos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                 if (getView().findViewById(R.id.vista_detalle_grupo_inv) != null) {
-
                     DetalleDeGrupoFragment fragment = new DetalleDeGrupoFragment();
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("grupo", grupos.get(0));
@@ -98,7 +106,6 @@ public class SolicitudesPostetgadasFragment extends Fragment implements Adaptado
                 }
             }
             if (investigadores.size() != 0) {
-                listadoInvestigadores = (RecyclerView) getView().findViewById(R.id.lista_investigadores_1);
                 adaptadorDeInvestigador = new AdaptadorDeInvestigadorPostergados(investigadores, this);
                 listadoInvestigadores.setAdapter(adaptadorDeInvestigador);
                 listadoInvestigadores.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

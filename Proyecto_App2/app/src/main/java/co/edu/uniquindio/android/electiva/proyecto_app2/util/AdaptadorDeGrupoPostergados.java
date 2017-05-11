@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.SolicitudesPostetgadasFragment;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Grupo;
@@ -89,10 +92,17 @@ public class AdaptadorDeGrupoPostergados extends RecyclerView.Adapter<AdaptadorD
      * @version 1.0
      */
     public static class GrupoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView txtNombreGrupo;
-        private TextView txtSigla;
-        private TextView txtLinea1;
-        private TextView txtLinea2;
+
+        @BindView(R.id.nombre)
+        protected TextView txtNombreGrupo;
+        @BindView(R.id.sigla)
+        protected TextView txtSigla;
+        @BindView(R.id.linea1)
+        protected TextView txtLinea1;
+        @BindView(R.id.linea2)
+        protected TextView txtLinea2;
+
+        protected Unbinder unbinder;
 
         /**
          * Método constructor que se encarga de inicializar los valores
@@ -102,14 +112,7 @@ public class AdaptadorDeGrupoPostergados extends RecyclerView.Adapter<AdaptadorD
         public GrupoViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            txtNombreGrupo = (TextView)
-                    itemView.findViewById(R.id.nombre);
-            txtSigla = (TextView)
-                    itemView.findViewById(R.id.sigla);
-            txtLinea1 = (TextView)
-                    itemView.findViewById(R.id.linea1);
-            txtLinea2 = (TextView)
-                    itemView.findViewById(R.id.linea2);
+            unbinder = ButterKnife.bind(this, itemView);
         }
 
         /**

@@ -30,10 +30,10 @@
     <dimen name="textSize_titulo_Edit">40sp</dimen>
     <dimen name="width_linea_editar">250dp</dimen>
     <dimen name="tamanio_imagen_edit_width">430dp</dimen>
-    <dimen name="tamanio_imagen_edit_height">310dp</dimen>
+    <dimen name="tamanio_imagen_edit_height">280dp</dimen>
     <dimen name="width_card_edit_inicio">280dp</dimen>
     <dimen name="marginTop_card_edit_inicio">35dp</dimen>
-    <dimen name="textSize_bienvenido_edit">50sp</dimen>
+    <dimen name="textSize_bienvenido_edit">45sp</dimen>
     <dimen name="width_linea_edit_inicio">230dp</dimen>
     <dimen name="textSize_edit_text_editar">30sp</dimen>
     <dimen name="textSize_actualizar_button_text">23sp</dimen>

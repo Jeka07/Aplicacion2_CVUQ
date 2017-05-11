@@ -16,6 +16,10 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.MainActivity;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
@@ -30,17 +34,24 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
  */
 public class IngresoFragment extends Fragment implements View.OnClickListener {
 
+    @Nullable
+    @BindView(R.id.registrarse)
+    protected Button btnRegistro;
+    @BindView(R.id.ingresar)
+    protected Button btnIngresar;
 
-    Button btnRegistro;
-    Button btnIngresar;
-    OnButtonListener listener;
+    private OnButtonListener listener;
 
-    EditText txtCorreo;
-    EditText txtContrasenia;
+    @BindView(R.id.ingresar_correo)
+    protected EditText txtCorreo;
+    @BindView(R.id.ingresar_contrasenia)
+    protected EditText txtContrasenia;
 
-    AlphaAnimation animation1 = new AlphaAnimation(0.2f, 1.0f);
+    protected Unbinder unbinder;
 
-    ArrayList<Administrador> administradores;
+    private AlphaAnimation animation1 = new AlphaAnimation(0.2f, 1.0f);
+
+    private ArrayList<Administrador> administradores;
 
     /**
      * Constructor vacio para instanciar el fragmento.
@@ -60,6 +71,7 @@ public class IngresoFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View x = inflater.inflate(R.layout.fragment_ingreso, container, false);
+        unbinder = ButterKnife.bind(this,x);
         return x;
     }
 
@@ -72,11 +84,6 @@ public class IngresoFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        btnIngresar = (Button) getView().findViewById(R.id.ingresar);
-        btnRegistro = (Button) getView().findViewById(R.id.registrarse);
-        txtCorreo = (EditText) getView().findViewById(R.id.ingresar_correo);
-        txtContrasenia = (EditText) getView().findViewById(R.id.ingresar_contrasenia);
-
         if (getArguments() != null) {
             administradores = getArguments().getParcelableArrayList(MainActivity.LISTA_ADMINISTRADORES);
         } else {
@@ -84,7 +91,6 @@ public class IngresoFragment extends Fragment implements View.OnClickListener {
             administradores = mainActivity.getAdministradores();
         }
 
-        btnIngresar.setOnClickListener(this);
         animacionButton();
 
         if (getView().findViewById(R.id.vista_registro) != null) {
@@ -116,29 +122,6 @@ public class IngresoFragment extends Fragment implements View.OnClickListener {
      */
     @Override
     public void onClick(View v) {
-        v.startAnimation(animation1);
-        if (v.getId() == btnIngresar.getId()) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService
-                    (Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(txtContrasenia.getWindowToken(), 0);
-
-            Administrador admin = new Administrador();
-            boolean existe = false;
-            try {
-                if (!txtContrasenia.getText().toString().equals("") && !txtCorreo.getText().toString().equals("")) {
-                    for (int i = 0; i < administradores.size(); i++) {
-                        if (txtContrasenia.getText().toString().equals(administradores.get(i).getContrasenia())
-                                && txtCorreo.getText().toString().equals(administradores.get(i).getCorreo())) {
-                            existe = true;
-                            admin = administradores.get(i);
-                        }
-                    }
-                }
-                listener.onIngresoSelected(existe, admin);
-            } catch (NullPointerException e) {
-                listener.onIngresoSelected(existe, null);
-            }
-        }
         if (getView().findViewById(R.id.vista_registro) != null) {
             RegistroFragment registroFragment = new RegistroFragment();
             Bundle bundle = new Bundle();
@@ -149,6 +132,34 @@ public class IngresoFragment extends Fragment implements View.OnClickListener {
             if (v.getId() == btnRegistro.getId()) {
                 listener.onRegistroSelected();
             }
+        }
+    }
+
+    /**
+     * Método que se ejecuta al presionar el botón ingresar de la interfaz
+     */
+    @OnClick(R.id.ingresar)
+    protected void onClickIngresar() {
+        btnIngresar.startAnimation(animation1);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService
+                (Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(txtContrasenia.getWindowToken(), 0);
+
+        Administrador admin = new Administrador();
+        boolean existe = false;
+        try {
+            if (!txtContrasenia.getText().toString().equals("") && !txtCorreo.getText().toString().equals("")) {
+                for (int i = 0; i < administradores.size(); i++) {
+                    if (txtContrasenia.getText().toString().equals(administradores.get(i).getContrasenia())
+                            && txtCorreo.getText().toString().equals(administradores.get(i).getCorreo())) {
+                        existe = true;
+                        admin = administradores.get(i);
+                    }
+                }
+            }
+            listener.onIngresoSelected(existe, admin);
+        } catch (NullPointerException e) {
+            listener.onIngresoSelected(existe, null);
         }
     }
 

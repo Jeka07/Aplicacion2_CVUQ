@@ -14,6 +14,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.AdminActivity;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
@@ -29,18 +33,29 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
  */
 public class EditarPerfilFragment extends Fragment implements View.OnClickListener {
 
+    @BindView(R.id.actualizar_datos)
+    protected Button btnActualizar;
 
-    Button btnActualizar;
-    OnButtonEditListener listenerEdit;
-    AlphaAnimation animation1 = new AlphaAnimation(0.2f, 1.0f);
-    Administrador administrador;
+    private OnButtonEditListener listenerEdit;
+    private AlphaAnimation animation1 = new AlphaAnimation(0.2f, 1.0f);
+    private Administrador administrador;
+
+    @BindView(R.id.edit_nombre)
     EditText txtNombre;
+    @BindView(R.id.edit_apellido)
     EditText txtApellido;
+    @BindView(R.id.edit_correo)
     EditText txtCorreo;
+    @BindView(R.id.contrasenia_nueva)
     EditText txtContraseniaNueva;
+    @BindView(R.id.contrasenia_actual)
     EditText txtContraseiaActual;
+    @BindView(R.id.edit_confirmar_contrasenia)
     EditText txtConfirmarContrasenia;
-    boolean edicionCorrecta;
+
+    protected Unbinder unbinder;
+
+    private boolean edicionCorrecta;
 
     /**
      * Método constructor del fragmento
@@ -62,6 +77,7 @@ public class EditarPerfilFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         administrador = getArguments().getParcelable("admin");
         View x = inflater.inflate(R.layout.fragment_editar_perfil, container, false);
+        unbinder = ButterKnife.bind(this, x);
         return x;
     }
 
@@ -73,18 +89,10 @@ public class EditarPerfilFragment extends Fragment implements View.OnClickListen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        txtNombre = (EditText) getView().findViewById(R.id.edit_nombre);
         txtNombre.setText(administrador.getNombre());
-        txtApellido = (EditText) getView().findViewById(R.id.edit_apellido);
         txtApellido.setText(administrador.getApellido());
-        txtCorreo = (EditText) getView().findViewById(R.id.edit_correo);
         txtCorreo.setText(administrador.getCorreo());
-        txtContraseiaActual = (EditText) getView().findViewById(R.id.contrasenia_actual);
-        txtContraseniaNueva = (EditText) getView().findViewById(R.id.contrasenia_nueva);
-        txtConfirmarContrasenia = (EditText) getView().findViewById(R.id.edit_confirmar_contrasenia);
 
-        btnActualizar = (Button) getView().findViewById(R.id.actualizar_datos);
-        btnActualizar.setOnClickListener(this);
         animacionButton();
     }
 
@@ -95,39 +103,44 @@ public class EditarPerfilFragment extends Fragment implements View.OnClickListen
      */
     @Override
     public void onClick(View v) {
-        v.startAnimation(animation1);
-        if (v.getId() == btnActualizar.getId()) {
-            String mensaje = (String) getResources().getText(R.string.mensaje_alerta_edicion_correcta);
-            String contraseniaNueva = txtContraseniaNueva.getText().toString();
-            if (!txtNombre.getText().toString().equals("")) {
-                administrador.setNombre(txtNombre.getText().toString());
-                edicionCorrecta = true;
-            }
-            if (!txtApellido.getText().toString().equals("")) {
-                administrador.setApellido(txtApellido.getText().toString());
-                edicionCorrecta = true;
-            }
-            if (!txtCorreo.getText().toString().equals("")) {
-                administrador.setCorreo(txtCorreo.getText().toString());
-                edicionCorrecta = true;
-            }
-            if (!contraseniaNueva.equals("")) {
-                String contraseniaActual = txtContraseiaActual.getText().toString();
-                String confirmarCont = txtConfirmarContrasenia.getText().toString();
-                if (contraseniaActual.equals(administrador.getContrasenia())
-                        && contraseniaNueva.equals(confirmarCont)) {
-                    administrador.setContrasenia(contraseniaNueva);
-                    edicionCorrecta = true;
-                } else {
-                    mensaje = (String) getResources().getText(R.string.mensaje_alerta_contrasenias_erroneas);
-                    edicionCorrecta = false;
-                }
-            }
-            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService
-                    (Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(txtConfirmarContrasenia.getWindowToken(), 0);
-            listenerEdit.onActualizarSelected(administrador, edicionCorrecta, mensaje);
+    }
+
+    /**
+     * Método que gestiona los eventos de tipo Click sobre el botón btnActualizar
+     */
+    @OnClick(R.id.actualizar_datos)
+    protected void onClickActualizar() {
+        btnActualizar.startAnimation(animation1);
+        String mensaje = (String) getResources().getText(R.string.mensaje_alerta_edicion_correcta);
+        String contraseniaNueva = txtContraseniaNueva.getText().toString();
+        if (!txtNombre.getText().toString().equals("")) {
+            administrador.setNombre(txtNombre.getText().toString());
+            edicionCorrecta = true;
         }
+        if (!txtApellido.getText().toString().equals("")) {
+            administrador.setApellido(txtApellido.getText().toString());
+            edicionCorrecta = true;
+        }
+        if (!txtCorreo.getText().toString().equals("")) {
+            administrador.setCorreo(txtCorreo.getText().toString());
+            edicionCorrecta = true;
+        }
+        if (!contraseniaNueva.equals("")) {
+            String contraseniaActual = txtContraseiaActual.getText().toString();
+            String confirmarCont = txtConfirmarContrasenia.getText().toString();
+            if (contraseniaActual.equals(administrador.getContrasenia())
+                    && contraseniaNueva.equals(confirmarCont)) {
+                administrador.setContrasenia(contraseniaNueva);
+                edicionCorrecta = true;
+            } else {
+                mensaje = (String) getResources().getText(R.string.mensaje_alerta_contrasenias_erroneas);
+                edicionCorrecta = false;
+            }
+        }
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService
+                (Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(txtConfirmarContrasenia.getWindowToken(), 0);
+        listenerEdit.onActualizarSelected(administrador, edicionCorrecta, mensaje);
     }
 
     /**

@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Investigador;
 
@@ -87,10 +90,17 @@ public class AdaptadorDeInvestigador extends RecyclerView.Adapter<AdaptadorDeInv
      * @version 1.0
      */
     public static class IntegranteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView txtNombre;
-        private TextView txtApellido;
-        private TextView txtLinea1;
-        private TextView txtLinea2;
+
+        @BindView(R.id.nombreInvestigador)
+        protected TextView txtNombre;
+        @BindView(R.id.apellido)
+        protected TextView txtApellido;
+        @BindView(R.id.linea1_investigador)
+        protected TextView txtLinea1;
+        @BindView(R.id.linea2_investigador)
+        protected TextView txtLinea2;
+
+        protected Unbinder unbinder;
 
         /**
          * Método constructor que se encarga de inicializar los valores
@@ -100,14 +110,7 @@ public class AdaptadorDeInvestigador extends RecyclerView.Adapter<AdaptadorDeInv
         public IntegranteViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            txtNombre = (TextView)
-                    itemView.findViewById(R.id.nombreInvestigador);
-            txtApellido = (TextView)
-                    itemView.findViewById(R.id.apellido);
-            txtLinea1 = (TextView)
-                    itemView.findViewById(R.id.linea1_investigador);
-            txtLinea2 = (TextView)
-                    itemView.findViewById(R.id.linea2_investigador);
+            unbinder = ButterKnife.bind(this,itemView);
         }
 
         /**

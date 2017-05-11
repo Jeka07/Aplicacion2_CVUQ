@@ -16,6 +16,8 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.MainActivity;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
@@ -30,20 +32,26 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
  */
 public class RegistroFragment extends Fragment implements View.OnClickListener {
 
+    @BindView(R.id.agregar_administrador)
+    protected Button btnRegistro;
 
-    Button btnRegistro;
-    AlphaAnimation animation1;
-    ArrayList<Administrador> administradores;
+    private AlphaAnimation animation1;
+    private ArrayList<Administrador> administradores;
 
-    EditText txtNombre;
-    EditText txtApellido;
-    EditText txtCorreo;
-    EditText txtContrasenia;
-    EditText txtContraseniaConf;
+    @BindView(R.id.agregar_nombre)
+    protected EditText txtNombre;
+    @BindView(R.id.agregar_apellido)
+    protected EditText txtApellido;
+    @BindView(R.id.agregar_correo)
+    protected EditText txtCorreo;
+    @BindView(R.id.agregar_contrasenia)
+    protected EditText txtContrasenia;
+    @BindView(R.id.registr_confirmar_contrasenia)
+    protected EditText txtContraseniaConf;
 
-    boolean registroCorrecto;
+    private boolean registroCorrecto;
 
-    OnButtonRegistrarListener listener;
+    private OnButtonRegistrarListener listener;
 
     /**
      * Método constructor del fragmento
@@ -63,21 +71,12 @@ public class RegistroFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View x = inflater.inflate(R.layout.fragment_registro, container, false);
-        btnRegistro = (Button) x.findViewById(R.id.agregar_administrador);
-        txtNombre = (EditText) x.findViewById(R.id.agregar_nombre);
-        txtApellido = (EditText) x.findViewById(R.id.agregar_apellido);
-        txtCorreo = (EditText) x.findViewById(R.id.agregar_correo);
-        txtContrasenia = (EditText) x.findViewById(R.id.agregar_contrasenia);
-        txtContraseniaConf = (EditText) x.findViewById(R.id.registr_confirmar_contrasenia);
 
         if (getArguments() != null) {
-            Log.d("PAse","PAse por el argumento de admin");
             administradores = getArguments().getParcelableArrayList(MainActivity.LISTA_ADMINISTRADORES);
         } else {
             administradores = llenarAdministradores();
         }
-
-        btnRegistro.setOnClickListener(this);
         animacionButton();
         return x;
     }
@@ -89,34 +88,38 @@ public class RegistroFragment extends Fragment implements View.OnClickListener {
      */
     @Override
     public void onClick(View v) {
-        v.startAnimation(animation1);
-        if (v.getId() == btnRegistro.getId()) {
-            String mensaje = "";
-            if (!txtNombre.getText().toString().equals("") && !txtApellido.getText().toString().equals("")
-                    && !txtCorreo.getText().toString().equals("") && !txtContrasenia.getText().toString().equals("")
-                    && !txtContraseniaConf.getText().toString().equals("")) {
-                if (txtContraseniaConf.getText().toString().equals(txtContrasenia.getText().toString())) {
-                    Administrador admin = new Administrador();
-                    admin.setNombre(txtNombre.getText().toString());
-                    admin.setApellido(txtApellido.getText().toString());
-                    admin.setCorreo(txtCorreo.getText().toString());
-                    admin.setContrasenia(txtContrasenia.getText().toString());
-                    administradores.add(admin);
-                    registroCorrecto = true;
-                    mensaje = getResources().getString(R.string.mensaje_registro_correcto);
-                } else {
-                    mensaje = (String) getResources().getText(R.string.mensaje_alerta_contrasenias_erroneas);
-                    registroCorrecto = false;
-                }
+    }
+    /**
+     * Método que gestiona los eventos de tipo Click sobre el botón btnRegistro
+     */
+    @OnClick(R.id.agregar_administrador)
+    public void onClickRegistrar(){
+        btnRegistro.startAnimation(animation1);
+        String mensaje = "";
+        if (!txtNombre.getText().toString().equals("") && !txtApellido.getText().toString().equals("")
+                && !txtCorreo.getText().toString().equals("") && !txtContrasenia.getText().toString().equals("")
+                && !txtContraseniaConf.getText().toString().equals("")) {
+            if (txtContraseniaConf.getText().toString().equals(txtContrasenia.getText().toString())) {
+                Administrador admin = new Administrador();
+                admin.setNombre(txtNombre.getText().toString());
+                admin.setApellido(txtApellido.getText().toString());
+                admin.setCorreo(txtCorreo.getText().toString());
+                admin.setContrasenia(txtContrasenia.getText().toString());
+                administradores.add(admin);
+                registroCorrecto = true;
+                mensaje = getResources().getString(R.string.mensaje_registro_correcto);
             } else {
-                mensaje = (String) getResources().getText(R.string.mensaje_campos_vacios);
+                mensaje = (String) getResources().getText(R.string.mensaje_alerta_contrasenias_erroneas);
                 registroCorrecto = false;
             }
-            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService
-                    (Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(txtContrasenia.getWindowToken(), 0);
-            listener.onRegistradoListener(mensaje,registroCorrecto);
+        } else {
+            mensaje = (String) getResources().getText(R.string.mensaje_campos_vacios);
+            registroCorrecto = false;
         }
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService
+                (Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(txtContrasenia.getWindowToken(), 0);
+        listener.onRegistradoListener(mensaje,registroCorrecto);
     }
 
     /**
@@ -134,7 +137,6 @@ public class RegistroFragment extends Fragment implements View.OnClickListener {
      */
     public interface OnButtonRegistrarListener {
         void onRegistradoListener(String mensaje,boolean registroCorrecto);
-
     }
 
     /**

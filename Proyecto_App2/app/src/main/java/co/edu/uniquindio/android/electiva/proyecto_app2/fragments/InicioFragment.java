@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.AdminActivity;
 
@@ -22,8 +25,11 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.activity.AdminActivity;
  */
 public class InicioFragment extends Fragment {
 
-    TextView txtNombreAdmin;
-    String nombreAdmin;
+    @BindView(R.id.nombre_usuario_log)
+    protected TextView txtNombreAdmin;
+    private String nombreAdmin;
+
+    protected Unbinder unbinder;
 
     /**
      * Método constructor de la vista
@@ -45,6 +51,7 @@ public class InicioFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         nombreAdmin = getArguments().getString("nombreAdmin");
         View x = inflater.inflate(R.layout.fragment_inicio, container, false);
+        unbinder = ButterKnife.bind(this, x);
         return x;
     }
 
@@ -56,7 +63,6 @@ public class InicioFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        txtNombreAdmin = (TextView) getView().findViewById(R.id.nombre_usuario_log);
         txtNombreAdmin.setText(nombreAdmin);
     }
 }

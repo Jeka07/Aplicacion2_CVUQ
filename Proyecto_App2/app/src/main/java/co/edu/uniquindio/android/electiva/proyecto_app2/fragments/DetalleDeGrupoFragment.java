@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.TextView;
@@ -21,12 +20,14 @@ import com.sa90.materialarcmenu.ArcMenu;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.AdminActivity;
 import co.edu.uniquindio.android.electiva.proyecto_app2.util.AdaptadorDeInvestigador;
 import co.edu.uniquindio.android.electiva.proyecto_app2.util.AdaptadorDeLinea;
-import co.edu.uniquindio.android.electiva.proyecto_app2.util.SolicitudesData;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Grupo;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Investigador;
 
@@ -42,32 +43,53 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Investigador;
 public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea.OnClickAdaptadorDeLinea,
         AdaptadorDeInvestigador.OnClickAdaptadorDeIntegrante, View.OnClickListener {
 
+    @BindView(R.id.txtNombre)
     protected TextView txtNombre;
+    @BindView(R.id.txtSigla)
     protected TextView txtSigla;
+    @BindView(R.id.txtEmail)
     protected TextView txtEmail;
+    @BindView(R.id.txtCategoria)
     protected TextView txtCategoria;
+    @BindView(R.id.txtLink)
     protected TextView txtLink;
+
+    @BindView(R.id.lista_investigadores)
     protected RecyclerView listadoIntegrantes;
+    @BindView(R.id.lista_lineas_investigacion)
     protected RecyclerView listadoLineas;
+    @BindView(R.id.lider_investigador)
+    protected RecyclerView liderInvestigadorRecycler;
+
+    @BindView(R.id.mensaje_no_lineas)
     protected TextView msjNoLineaGrup;
+    @BindView(R.id.mensaje_no_investigadores)
     protected TextView msjNoInv;
+    @BindView(R.id.mensaje_no_lider)
     protected TextView msjNoLider;
+
     protected Unbinder unbinder;
 
-    Grupo grupo;
+    private Grupo grupo;
 
-    AdaptadorDeInvestigador adaptadorInvestigador;
-    Investigador lider_investigador;
-    ArrayList<Investigador> investigadores;
+    private AdaptadorDeInvestigador adaptadorInvestigador;
+    private Investigador liderInvestigador;
+    private ArrayList<Investigador> investigadores;
 
-    AdaptadorDeLinea adaptador;
-    ArrayList<String> lineas;
+    private AdaptadorDeLinea adaptador;
+    private ArrayList<String> lineas;
 
-    ArcMenu arcMenuAndroid;
-    FloatingActionButton floatingEliminar,
-            floatingAceptar, floatingPosponer;
+    @BindView(R.id.arcmenu_menu)
+    protected ArcMenu arcMenuAndroid;
+    @BindView(R.id.fab_eliminar)
+    protected FloatingActionButton floatingEliminar;
+    @BindView(R.id.fab_aceptar)
+    protected FloatingActionButton floatingAceptar;
+    @BindView(R.id.fab_posponer)
+    protected FloatingActionButton floatingPosponer;
+    @BindView(R.id.fab)
+    protected FloatingActionButton btnFAB;
 
-    private FloatingActionButton btnFAB;
     private Boolean click = false;
 
     private String tipo;
@@ -90,21 +112,16 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         tipo = getArguments().getString("tipo");
-
         grupo = getArguments().getParcelable("grupo");
         lineas = (ArrayList<String>) grupo.getLineasInvestigacion();
 
-        lider_investigador = grupo.getLider();
+        liderInvestigador = grupo.getLider();
         investigadores = (ArrayList<Investigador>) grupo.getInvestigadores();
 
         View x = inflater.inflate(R.layout.fragment_detalle_grupo, container, false);
-
-        fabButton(x);
-
-        //Oyente de los eventos al realizar click sobre uno de los FAB
-        floatingEliminar.setOnClickListener(this);
-        floatingAceptar.setOnClickListener(this);
-        floatingPosponer.setOnClickListener(this);
+        unbinder = ButterKnife.bind(this, x);
+        btnFAB.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#144d0b")));
+        arcMenuAndroid.setOnClickListener(this);
 
         return x;
     }
@@ -118,20 +135,12 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        txtNombre = (TextView)
-                getView().findViewById(R.id.txtNombre);
         txtNombre.setText(grupo.getNombre());
-        txtSigla = (TextView) getView().findViewById(R.id.txtSigla);
         txtSigla.setText(grupo.getSigla());
-        txtEmail = (TextView) getView().findViewById(R.id.txtEmail);
         txtEmail.setText(grupo.getEmail());
-        txtCategoria = (TextView) getView().findViewById(R.id.txtCategoria);
         txtCategoria.setText(grupo.getCategoria());
-        txtLink = (TextView) getView().findViewById(R.id.txtLink);
         txtLink.setText(grupo.getLink());
 
-        listadoIntegrantes = (RecyclerView) getView().findViewById(R.id.lista_investigadores);
-        msjNoInv = (TextView) getView().findViewById(R.id.mensaje_no_investigadores);
         msjNoInv.setVisibility(View.INVISIBLE);
         if (investigadores.size() != 0) {
             adaptadorInvestigador = new AdaptadorDeInvestigador(investigadores, this);
@@ -141,20 +150,17 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
             msjNoInv.setVisibility(View.VISIBLE);
         }
 
-        listadoIntegrantes = (RecyclerView) getView().findViewById(R.id.lider_investigador);
-        msjNoLider = (TextView) getView().findViewById(R.id.mensaje_no_lider);
         msjNoLider.setVisibility(View.INVISIBLE);
         ArrayList<Investigador> lider_list = new ArrayList<>();
-        if (lider_investigador != null) {
-            lider_list.add(lider_investigador);
+        if (liderInvestigador != null) {
+            lider_list.add(liderInvestigador);
             adaptadorInvestigador = new AdaptadorDeInvestigador(lider_list, this);
-            listadoIntegrantes.setAdapter(adaptadorInvestigador);
-            listadoIntegrantes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+            liderInvestigadorRecycler.setAdapter(adaptadorInvestigador);
+            liderInvestigadorRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         } else {
             msjNoLider.setVisibility(View.VISIBLE);
         }
 
-        msjNoLineaGrup = (TextView) getView().findViewById(R.id.mensaje_no_lineas);
         msjNoLineaGrup.setVisibility(View.INVISIBLE);
         if (grupo.getLineasInvestigacion().size() != 0) {
             listadoLineas = (RecyclerView) getView().findViewById(R.id.lista_lineas_investigacion);
@@ -167,23 +173,6 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
         }
     }
 
-    /**
-     * Método que se encarga de inicializar los botones del menu de tipo FloatingActionButton
-     *
-     * @param x vista de la cual se obtienen los elementos necesarios para inicializar los botones
-     */
-    private void fabButton(View x) {
-        btnFAB = (FloatingActionButton) x.findViewById(R.id.fab);
-        btnFAB.setOnClickListener(this);
-        btnFAB.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#144d0b")));
-
-        arcMenuAndroid = (ArcMenu) x.findViewById(R.id.arcmenu_menu);
-        floatingEliminar = (FloatingActionButton) x.findViewById(R.id.fab_eliminar);
-        floatingAceptar = (FloatingActionButton) x.findViewById(R.id.fab_aceptar);
-        floatingPosponer = (FloatingActionButton) x.findViewById(R.id.fab_posponer);
-        arcMenuAndroid.setOnClickListener(this);
-        //Evento generado al precionar el FAB menu
-    }
 
     /**
      * Método que se ejecuta al dar click sobre alguna de las listas de la interfaz
@@ -201,57 +190,36 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
      */
     @Override
     public void onClick(View v) {
-        if (floatingEliminar.getId() == v.getId()) {
-            onClickEliminar();
+        arcMenuAndroid.toggleMenu();
+    }
+
+    /**
+     * Método que se ejecuta al presionar el FloatingActionButton btnFab que contiene la interfaz
+     */
+    @OnClick(R.id.fab)
+    protected void onClickFab() {
+        click = !click;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            Interpolator interpolador = AnimationUtils.loadInterpolator(btnFAB.getContext(),
+                    android.R.interpolator.fast_out_slow_in);
+            btnFAB.animate()
+                    .rotation(click ? 135f : 0)
+                    .setInterpolator(interpolador)
+                    .start();
         }
-        if (floatingAceptar.getId() == v.getId()) {
-            onClickAceptar();
+        if (click == true) {
+            arcMenuAndroid.performClick();
         }
-        if (floatingPosponer.getId() == v.getId()) {
-            if (tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {
-                String tag = getResources().getString(R.string.tag_fragment_solicitudes);
-                boolean resultado = true;
-                AdminActivity adminActivity = (AdminActivity) getActivity();
-                ListaDeSolicitudesFragment listaDeSolicitudesFragment = (ListaDeSolicitudesFragment) getActivity()
-                        .getSupportFragmentManager().findFragmentByTag(tag);
-                String mensaje = getResources().getString(R.string.mensaje_solicitud_postergada);
-                adminActivity.mostrarAlerta(mensaje, getContext());
-                resultado = listaDeSolicitudesFragment.postergarItem(grupo);
-                if (resultado) {
-                    adminActivity.onBackPressed();
-                }
-            } else {
-                AdminActivity adminActivity = (AdminActivity) getActivity();
-                String mensaje = getResources().getString(R.string.mensaje_solicitud_ya_postergada);
-                adminActivity.mostrarAlerta(mensaje, getContext());
-            }
-        }
-        if (btnFAB.getId() == v.getId()) {
-            click = !click;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                Interpolator interpolador = AnimationUtils.loadInterpolator(btnFAB.getContext(),
-                        android.R.interpolator.fast_out_slow_in);
-                v.animate()
-                        .rotation(click ? 135f : 0)
-                        .setInterpolator(interpolador)
-                        .start();
-            }
-            if (click == true) {
-                arcMenuAndroid.performClick();
-            }
-            if (click == false) {
-                arcMenuAndroid.performClick();
-            }
-        }
-        if (arcMenuAndroid.getId() == v.getId()) {
-            arcMenuAndroid.toggleMenu();
+        if (click == false) {
+            arcMenuAndroid.performClick();
         }
     }
 
     /**
-     * Método que se encarga de eliminar una solicitud de la lista correspondiente
+     * Método que se encarga de eliminar una solicitud de la lista correspondiente al presionar el fab_eliminar
      */
-    private void onClickEliminar() {
+    @OnClick(R.id.fab_eliminar)
+    protected void onClickEliminar() {
         boolean resultado = true;
         AdminActivity adminAc = (AdminActivity) getActivity();
         String mensaje = getResources().getString(R.string.mensaje_solicitud_eliminada);
@@ -262,7 +230,6 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
                     .getSupportFragmentManager().findFragmentByTag(tag);
             adminAc.mostrarAlerta(mensaje, getContext());
             resultado = listaDeSolicitudesFragment.eliminarItem(grupo);
-
         } else {
             String tag = getResources().getString(R.string.tag_fragment_postergadas);
             SolicitudesPostetgadasFragment solicitudesPostetgadasFragment = (SolicitudesPostetgadasFragment) getActivity()
@@ -273,13 +240,13 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
         if (resultado) {
             adminAc.onBackPressed();
         }
-
     }
 
     /**
-     * Método que se encarga de aceptar una solicitud de la lista correspondiente
+     * Método que se encarga de aceptar una solicitud de la lista correspondiente al presionar el fab_aceptar
      */
-    private void onClickAceptar() {
+    @OnClick(R.id.fab_aceptar)
+    protected void onClickAceptar() {
         boolean resultado = true;
         AdminActivity adminAc = (AdminActivity) getActivity();
         String mensaje = getResources().getString(R.string.mensaje_solicitud_aceptada);
@@ -290,7 +257,6 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
                     .getSupportFragmentManager().findFragmentByTag(tag);
             adminAc.mostrarAlerta(mensaje, getContext());
             resultado = listaDeSolicitudesFragment.aceptarItem(grupo);
-
         } else {
             String tag = getResources().getString(R.string.tag_fragment_postergadas);
             SolicitudesPostetgadasFragment solicitudesPostetgadasFragment = (SolicitudesPostetgadasFragment) getActivity()
@@ -304,6 +270,30 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
     }
 
     /**
+     * Método que se encarga de posponer una solicitud de la lista correspondiente al presionar el fab_posponer
+     */
+    @OnClick(R.id.fab_posponer)
+    protected void onClickPosponer() {
+        if (tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {
+            String tag = getResources().getString(R.string.tag_fragment_solicitudes);
+            boolean resultado = true;
+            AdminActivity adminActivity = (AdminActivity) getActivity();
+            ListaDeSolicitudesFragment listaDeSolicitudesFragment = (ListaDeSolicitudesFragment) getActivity()
+                    .getSupportFragmentManager().findFragmentByTag(tag);
+            String mensaje = getResources().getString(R.string.mensaje_solicitud_postergada);
+            adminActivity.mostrarAlerta(mensaje, getContext());
+            resultado = listaDeSolicitudesFragment.postergarItem(grupo);
+            if (resultado) {
+                adminActivity.onBackPressed();
+            }
+        } else {
+            AdminActivity adminActivity = (AdminActivity) getActivity();
+            String mensaje = getResources().getString(R.string.mensaje_solicitud_ya_postergada);
+            adminActivity.mostrarAlerta(mensaje, getContext());
+        }
+    }
+
+    /**
      * Método que se ejecuta al seleccionar un intergrante de los que se muestran en la interfaz
      *
      * @param pos posición de la lista sobre la que se ejecuto el evento
@@ -312,5 +302,9 @@ public class DetalleDeGrupoFragment extends Fragment implements AdaptadorDeLinea
     public void onClickPositionIntegrante(int pos) {
     }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("Bu", "Pase por aquí100");
+    }
 }

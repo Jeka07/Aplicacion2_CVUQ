@@ -97,6 +97,7 @@ public class AdminActivity extends AppCompatActivity implements
 
         administradores = SolicitudesData.administradores;
         Log.d("tam", administradores.size() + " bu");
+        Log.d("tam", posAdmin + " bu");
         administrador = administradores.get(posAdmin);
         unbinder = ButterKnife.bind(this);
 
@@ -203,6 +204,7 @@ public class AdminActivity extends AppCompatActivity implements
         etiqueta = fragmentoActual.getTag();
         outState.putInt("tituloFragmento", titulo_fragmento);
         getSupportFragmentManager().putFragment(outState, "fragmentGuardado", fragmentoActual);
+
     }
 
 

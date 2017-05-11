@@ -22,6 +22,10 @@ import com.sa90.materialarcmenu.ArcMenu;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.AdminActivity;
 import co.edu.uniquindio.android.electiva.proyecto_app2.util.AdaptadorDeGrupo;
@@ -41,27 +45,46 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Investigador;
 public class DetalleDeInvestigadorFragment extends Fragment implements AdaptadorDeGrupo.OnClickAdaptadorDeGrupo,
         AdaptadorDeLinea.OnClickAdaptadorDeLinea, View.OnClickListener {
 
-    private RecyclerView grupoR;
-    private RecyclerView lineasR;
-    private TextView txtNombre;
-    private TextView txtGenero;
-    private TextView txtNacionalidad;
-    private TextView txtEmail;
-    private TextView txtCategoria;
-    private TextView txtFormacion;
-    private TextView txtLink;
+    @BindView(R.id.grupo_inv_info)
+    protected RecyclerView grupoR;
+    @BindView(R.id.lista_lineas_investigacion)
+    protected RecyclerView lineasR;
+    @BindView(R.id.txtNombre)
+    protected TextView txtNombre;
+    @BindView(R.id.txtGenero)
+    protected TextView txtGenero;
+    @BindView(R.id.txtNacionalidad)
+    protected TextView txtNacionalidad;
+    @BindView(R.id.txtCategoria)
+    protected TextView txtCategoria;
+    @BindView(R.id.txtEmail)
+    protected TextView txtEmail;
+    @BindView(R.id.txtFormacion)
+    protected TextView txtFormacion;
+    @BindView(R.id.txtLinkcvlac)
+    protected TextView txtLink;
+    @BindView(R.id.mensaje_no_grupos)
+    protected TextView msjNoGrupo;
+    @BindView(R.id.mensaje_no_lineas)
+    protected TextView msjNoLineaInv;
+
+    @BindView(R.id.fab)
+    protected FloatingActionButton btnFAB;
+
+    @BindView(R.id.arcmenu_menu)
+    protected ArcMenu arcMenuAndroid;
+    @BindView(R.id.fab_eliminar)
+    protected FloatingActionButton floatingEliminar;
+    @BindView(R.id.fab_aceptar)
+    protected FloatingActionButton floatingAceptar;
+    @BindView(R.id.fab_posponer)
+    protected FloatingActionButton floatingPosponer;
+
+    protected Unbinder unbinder;
+
+    private Boolean click = false;
+    private String tipo;
     private Investigador investigador;
-    private TextView msjNoGrupo;
-    private TextView msjNoLineaInv;
-
-    private FloatingActionButton btnFAB;
-
-    ArcMenu arcMenuAndroid;
-    android.support.design.widget.FloatingActionButton floatingEliminar,
-            floatingAceptar, floatingPosponer;
-    Boolean click = false;
-
-    String tipo;
 
     /**
      * Método constructor del fragmento
@@ -83,16 +106,11 @@ public class DetalleDeInvestigadorFragment extends Fragment implements Adaptador
                              Bundle savedInstanceState) {
 
         tipo = getArguments().getString("tipo");
-        Log.d("tipoIV", tipo);
         investigador = getArguments().getParcelable("investigador");
         View v = inflater.inflate(R.layout.fragment_detalle_investigador, container, false);
-
-        fabButton(v);
-
-        //Oyente de los eventos al realizar click sobre uno de los FAB
-        floatingEliminar.setOnClickListener(this);
-        floatingAceptar.setOnClickListener(this);
-        floatingPosponer.setOnClickListener(this);
+        unbinder = ButterKnife.bind(this, v);
+        btnFAB.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#144d0b")));
+        arcMenuAndroid.setOnClickListener(this);
         return v;
     }
 
@@ -105,24 +123,14 @@ public class DetalleDeInvestigadorFragment extends Fragment implements Adaptador
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
-        txtNombre = (TextView) getView().findViewById(R.id.txtNombre);
         txtNombre.setText(investigador.getNombre() + " " + investigador.getApellido());
-        txtGenero = (TextView) getView().findViewById(R.id.txtGenero);
         txtGenero.setText(investigador.getGenero());
-        txtCategoria = (TextView) getView().findViewById(R.id.txtCategoria);
         txtCategoria.setText(investigador.getCategoria());
-        txtEmail = (TextView) getView().findViewById(R.id.txtEmail);
         txtEmail.setText(investigador.getEmail());
-        txtFormacion = (TextView) getView().findViewById(R.id.txtFormacion);
         txtFormacion.setText(investigador.getFormacion());
-        txtLink = (TextView) getView().findViewById(R.id.txtLinkcvlac);
         txtLink.setText(investigador.getLink());
-        txtNacionalidad = (TextView) getView().findViewById(R.id.txtNacionalidad);
         txtNacionalidad.setText(investigador.getNacionalidad());
 
-        grupoR = (RecyclerView) getView().findViewById(R.id.grupo_inv_info);
-        msjNoGrupo = (TextView) getView().findViewById(R.id.mensaje_no_grupos);
         msjNoGrupo.setVisibility(View.INVISIBLE);
         ArrayList<Grupo> grupoInv = new ArrayList<>();
         if (investigador.getGrupo() != null) {
@@ -135,8 +143,6 @@ public class DetalleDeInvestigadorFragment extends Fragment implements Adaptador
             msjNoGrupo.setVisibility(View.VISIBLE);
         }
 
-        lineasR = (RecyclerView) getView().findViewById(R.id.lista_lineas_investigacion);
-        msjNoLineaInv = (TextView) getView().findViewById(R.id.mensaje_no_lineas);
         msjNoLineaInv.setVisibility(View.INVISIBLE);
         if (investigador.getLineasInvestigacion().size() != 0) {
             AdaptadorDeLinea adaptadorDeLinea = new AdaptadorDeLinea(investigador.getLineasInvestigacion(), this);
@@ -177,84 +183,42 @@ public class DetalleDeInvestigadorFragment extends Fragment implements Adaptador
     }
 
     /**
-     * Método que se encarga de inicializar los botones del menu de tipo FloatingActionButton
-     *
-     * @param x vista de la cual se obtienen los elementos necesarios para inicializar los botones
-     */
-    private void fabButton(View x) {
-
-        btnFAB = (FloatingActionButton) x.findViewById(R.id.fab);
-        btnFAB.setOnClickListener(this);
-        btnFAB.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#144d0b")));
-
-        arcMenuAndroid = (ArcMenu) x.findViewById(R.id.arcmenu_menu);
-        floatingEliminar = (FloatingActionButton) x.findViewById(R.id.fab_eliminar);
-        floatingAceptar = (FloatingActionButton) x.findViewById(R.id.fab_aceptar);
-        floatingPosponer = (FloatingActionButton) x.findViewById(R.id.fab_posponer);
-        if (!tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {
-            floatingPosponer.setVisibility(View.INVISIBLE);
-        }
-        arcMenuAndroid.setOnClickListener(this);
-    }
-
-    /**
      * Método que se ejecuta al presionar alguno de los botones que contiene la interfaz
      *
      * @param v vista sobre la que se ejecuto el evento
      */
     @Override
     public void onClick(View v) {
-        if (floatingEliminar.getId() == v.getId()) {
-            onClickEliminar();
+        arcMenuAndroid.toggleMenu();
+    }
+
+    /**
+     * Método que se ejecuta al presionar el FloatingActionButton btnFab que contiene la interfaz
+     */
+    @OnClick(R.id.fab)
+    protected void onFabClick() {
+        click = !click;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            Interpolator interpolador = AnimationUtils.loadInterpolator(btnFAB.getContext(),
+                    android.R.interpolator.fast_out_slow_in);
+            btnFAB.animate()
+                    .rotation(click ? 135f : 0)
+                    .setInterpolator(interpolador)
+                    .start();
         }
-        if (floatingAceptar.getId() == v.getId()) {
-            onClickAceptar();
+        if (click == true) {
+            arcMenuAndroid.performClick();
         }
-        if (floatingPosponer.getId() == v.getId()) {
-            if (tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {
-                String tag = getResources().getString(R.string.tag_fragment_solicitudes);
-                boolean resultado = true;
-                AdminActivity adminActivity = (AdminActivity) getActivity();
-                ListaDeSolicitudesFragment listaDeSolicitudesFragment = (ListaDeSolicitudesFragment) getActivity()
-                        .getSupportFragmentManager().findFragmentByTag(tag);
-                String mensaje = getResources().getString(R.string.mensaje_solicitud_postergada);
-                adminActivity.mostrarAlerta(mensaje, getContext());
-                resultado = listaDeSolicitudesFragment.postergarItem(investigador);
-                if (resultado) {
-                    adminActivity.onBackPressed();
-                }
-            } else {
-                AdminActivity adminActivity = (AdminActivity) getActivity();
-                String mensaje = getResources().getString(R.string.mensaje_solicitud_ya_postergada);
-                adminActivity.mostrarAlerta(mensaje,getContext());
-            }
-        }
-        if (btnFAB.getId() == v.getId()) {
-            click = !click;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                Interpolator interpolador = AnimationUtils.loadInterpolator(btnFAB.getContext(),
-                        android.R.interpolator.fast_out_slow_in);
-                v.animate()
-                        .rotation(click ? 135f : 0)
-                        .setInterpolator(interpolador)
-                        .start();
-            }
-            if (click == true) {
-                arcMenuAndroid.performClick();
-            }
-            if (click == false) {
-                arcMenuAndroid.performClick();
-            }
-        }
-        if (arcMenuAndroid.getId() == v.getId()) {
-            arcMenuAndroid.toggleMenu();
+        if (click == false) {
+            arcMenuAndroid.performClick();
         }
     }
 
     /**
-     * Método que se encarga de eliminar una solicitud de la lista correspondiente
+     * Método que se encarga de eliminar una solicitud de la lista correspondiente al presionar el botón fab_eliminar
      */
-    private void onClickEliminar() {
+    @OnClick(R.id.fab_eliminar)
+    protected void onClickEliminar() {
         boolean resultado = true;
         AdminActivity adminAc = (AdminActivity) getActivity();
         String mensaje = getResources().getString(R.string.mensaje_solicitud_eliminada);
@@ -279,9 +243,10 @@ public class DetalleDeInvestigadorFragment extends Fragment implements Adaptador
     }
 
     /**
-     * Método que se encarga de aceptar una solicitud de la lista correspondiente
+     * Método que se encarga de aceptar una solicitud de la lista correspondiente al presionar el fab_aceptar
      */
-    private void onClickAceptar() {
+    @OnClick(R.id.fab_aceptar)
+    protected void onClickAceptar() {
         boolean resultado = true;
         AdminActivity adminAc = (AdminActivity) getActivity();
         String mensaje = getResources().getString(R.string.mensaje_solicitud_aceptada);
@@ -302,6 +267,30 @@ public class DetalleDeInvestigadorFragment extends Fragment implements Adaptador
         }
         if (resultado) {
             adminAc.onBackPressed();
+        }
+    }
+
+    /**
+     * Método que se encarga de posponer una solicitud de la lista correspondiente al presionar el fab_posponer
+     */
+    @OnClick(R.id.fab_posponer)
+    protected void onClickPosponer() {
+        if (tipo.equals(AdminActivity.SOLICITUDES_NUEVAS)) {
+            String tag = getResources().getString(R.string.tag_fragment_solicitudes);
+            boolean resultado = true;
+            AdminActivity adminActivity = (AdminActivity) getActivity();
+            ListaDeSolicitudesFragment listaDeSolicitudesFragment = (ListaDeSolicitudesFragment) getActivity()
+                    .getSupportFragmentManager().findFragmentByTag(tag);
+            String mensaje = getResources().getString(R.string.mensaje_solicitud_postergada);
+            adminActivity.mostrarAlerta(mensaje, getContext());
+            resultado = listaDeSolicitudesFragment.postergarItem(investigador);
+            if (resultado) {
+                adminActivity.onBackPressed();
+            }
+        } else {
+            AdminActivity adminActivity = (AdminActivity) getActivity();
+            String mensaje = getResources().getString(R.string.mensaje_solicitud_ya_postergada);
+            adminActivity.mostrarAlerta(mensaje, getContext());
         }
     }
 

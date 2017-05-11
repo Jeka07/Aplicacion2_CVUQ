@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
     SolicitudesData sd = new SolicitudesData();
     public static final String ADMINISTRADOR = "administrador";
     public static final String LISTA_ADMINISTRADORES = "administradores";
+
     @BindView(R.id.titulo_activity_main)
     protected TextView tituloActicity;
     private Unbinder unbinder;
