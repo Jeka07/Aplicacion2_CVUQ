@@ -2,10 +2,12 @@ package co.edu.uniquindio.android.electiva.proyecto_app2.fragments;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.MainActivity;
+import co.edu.uniquindio.android.electiva.proyecto_app2.interfaz.IManagerFirebase;
+import co.edu.uniquindio.android.electiva.proyecto_app2.util.ManagerFireBaseAdmin;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
 
 /**
@@ -32,7 +36,8 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
  * @author Jesica Tapasco Velez
  * @version 1.0
  */
-public class IngresoFragment extends Fragment implements View.OnClickListener {
+public class IngresoFragment extends Fragment implements View.OnClickListener, IManagerFirebase,
+        ManagerFireBaseAdmin.OnCarga{
 
     @Nullable
     @BindView(R.id.registrarse)
@@ -51,13 +56,15 @@ public class IngresoFragment extends Fragment implements View.OnClickListener {
 
     private AlphaAnimation animation1 = new AlphaAnimation(0.2f, 1.0f);
 
-    private ArrayList<Administrador> administradores;
+    private ArrayList<Administrador> administradores = new ArrayList<>();
+    private ManagerFireBaseAdmin managerFireBase;
+
+    private ProgressDialog progress;
 
     /**
      * Constructor vacio para instanciar el fragmento.
      */
     public IngresoFragment() {
-
     }
 
     /**
@@ -72,6 +79,8 @@ public class IngresoFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View x = inflater.inflate(R.layout.fragment_ingreso, container, false);
         unbinder = ButterKnife.bind(this,x);
+        managerFireBase = ManagerFireBaseAdmin.instancia(this);
+
         return x;
     }
 
@@ -84,12 +93,10 @@ public class IngresoFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (getArguments() != null) {
-            administradores = getArguments().getParcelableArrayList(MainActivity.LISTA_ADMINISTRADORES);
-        } else {
-            MainActivity mainActivity = (MainActivity) getActivity();
-            administradores = mainActivity.getAdministradores();
-        }
+        progress = ProgressDialog.show(getContext(),"Cargando","Espere", true);
+        managerFireBase.cargarLista();
+
+        Log.v("AdminTam","Tam = "+administradores.size());
 
         animacionButton();
 
@@ -163,6 +170,23 @@ public class IngresoFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void add(Object o) {
+        administradores.add((Administrador) o);
+    }
+
+    @Override
+    public void remove(Object o) {
+
+    }
+
+    @Override
+    public void onFinalCarga(ArrayList<Administrador> administradores) {
+        Log.d("hola","Prueba");
+        this.administradores = administradores;
+        progress.dismiss();
+    }
+
     /**
      * Interface utilizada para comunicar el evento de generado al pulsar el boton registrar
      */
@@ -199,4 +223,6 @@ public class IngresoFragment extends Fragment implements View.OnClickListener {
         animation1.setStartOffset(5);
         animation1.setFillAfter(true);
     }
+
+
 }

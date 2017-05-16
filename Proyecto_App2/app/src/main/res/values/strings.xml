@@ -32,6 +32,7 @@
     <string name="datos_personales_inv">Datos personales</string>
 
     <!-- Strings títulos detalle -->
+    <string name="titulo_detalle">Detalle de solicitud</string>
     <string name="titulo_lider">Lider investigador</string>
     <string name="titulo_integrantes">Integrantes</string>
     <string name="titulo_lineas_investigación">Lineas de investigación</string>

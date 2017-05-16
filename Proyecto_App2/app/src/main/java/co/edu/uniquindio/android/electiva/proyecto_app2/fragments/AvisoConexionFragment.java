@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 
@@ -41,6 +42,7 @@ public class AvisoConexionFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.aviso_conexion, null);
         builder.setView(view);
+        builder.setCancelable(false);
         return builder.create();
     }
 }

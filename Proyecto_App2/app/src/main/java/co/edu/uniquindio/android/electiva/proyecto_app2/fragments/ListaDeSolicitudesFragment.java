@@ -3,6 +3,7 @@ package co.edu.uniquindio.android.electiva.proyecto_app2.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -53,6 +54,9 @@ public class ListaDeSolicitudesFragment extends Fragment implements AdaptadorDeG
 
     @BindView(R.id.mensaje_solicitudes_post)
     protected TextView mensaje;
+    @Nullable
+    @BindView(R.id.titulo_detalle_solicitud)
+    protected TextView tituloDetalle;
 
     protected Unbinder unbinder;
 
@@ -124,6 +128,13 @@ public class ListaDeSolicitudesFragment extends Fragment implements AdaptadorDeG
 
         } else {
             mensaje.setVisibility(View.VISIBLE);
+            if (getResources().getConfiguration().orientation ==
+                    Configuration.ORIENTATION_LANDSCAPE) {
+                if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
+                        Configuration.SCREENLAYOUT_SIZE_LARGE) {
+                    tituloDetalle.setVisibility(View.INVISIBLE);
+                }
+            }
         }
     }
 

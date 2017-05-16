@@ -1,7 +1,12 @@
 package co.edu.uniquindio.android.electiva.proyecto_app2.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
+import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.AvisoConexionFragment;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.DetalleDeGrupoFragment;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.DetalleDeInvestigadorFragment;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.EditarPerfilFragment;
@@ -34,6 +40,8 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.InicioFragment
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.ListaDeSolicitudesFragment;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.RegistroFragment;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.SolicitudesPostetgadasFragment;
+import co.edu.uniquindio.android.electiva.proyecto_app2.interfaz.IManagerFirebase;
+import co.edu.uniquindio.android.electiva.proyecto_app2.util.ManagerFireBaseAdmin;
 import co.edu.uniquindio.android.electiva.proyecto_app2.util.SolicitudesData;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Grupo;
@@ -56,7 +64,8 @@ public class AdminActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         EditarPerfilFragment.OnButtonEditListener,
         SolicitudesPostetgadasFragment.OnIntegranteSeleccionadoListenerPost,
-        SolicitudesPostetgadasFragment.OnGrupoSeleccionadoListenerPost {
+        SolicitudesPostetgadasFragment.OnGrupoSeleccionadoListenerPost,
+        IManagerFirebase, ManagerFireBaseAdmin.OnCarga {
 
     @BindView(R.id.drawerLayout)
     protected DrawerLayout mDrawerLayout;
@@ -68,18 +77,23 @@ public class AdminActivity extends AppCompatActivity implements
     protected TextView tituloFragmento;
     private Unbinder unbinder;
 
-    FragmentManager mFragmentManager;
-    Fragment fragmentoActual;
-    public Boolean fragmentRestaurado;
-    String etiqueta;
-    int titulo_fragmento;
+    private FragmentManager mFragmentManager;
+    private Fragment fragmentoActual;
+    private Boolean fragmentRestaurado;
+    private String etiqueta;
+    private int titulo_fragmento;
 
-    Administrador administrador;
-    ArrayList<Administrador> administradores;
-    int posAdmin;
+    private Administrador administrador;
+    private ManagerFireBaseAdmin managerFireBase;
 
     public static final String SOLICITUDES_NUEVAS = "nuevas";
     public static final String SOLICITUDES_POST = "postergadas";
+
+    final AvisoConexionFragment aviso = new AvisoConexionFragment();
+    private boolean avisoAbierto = false;
+
+    private NetworkChangeReceiver receiver;
+    private boolean isConnected = false;
 
     /**
      * Método que se ejecuta en la creación de la actividad actual
@@ -93,12 +107,15 @@ public class AdminActivity extends AppCompatActivity implements
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        posAdmin = extras.getInt("posicion");
+        administrador = extras.getParcelable(MainActivity.ADMINISTRADOR);
 
-        administradores = SolicitudesData.administradores;
-        Log.d("tam", administradores.size() + " bu");
-        Log.d("tam", posAdmin + " bu");
-        administrador = administradores.get(posAdmin);
+        aviso.setCancelable(false);
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkChangeReceiver();
+        registerReceiver(receiver, filter);
+
+        managerFireBase = ManagerFireBaseAdmin.instancia(this);
+
         unbinder = ButterKnife.bind(this);
 
         mNavigationView.setNavigationItemSelectedListener(this);
@@ -169,6 +186,7 @@ public class AdminActivity extends AppCompatActivity implements
             Bundle bundle = new Bundle();
             bundle.putParcelable("admin", administrador);
             editarPerfilFragment.setArguments(bundle);
+            Log.d("ID3", " " + administrador.getId());
             dibujarFragmento(editarPerfilFragment, R.string.titulo_frag_editar, etiqueta);
             mDrawerLayout.closeDrawers();
         }
@@ -183,7 +201,7 @@ public class AdminActivity extends AppCompatActivity implements
         if (menuItem.getItemId() == R.id.cerrar_sesion) {
             Log.d("Cerrar", "Me cerraron");
             Intent resultado = new Intent(this, MainActivity.class);
-            resultado.putExtra(MainActivity.LISTA_ADMINISTRADORES, administradores);
+
             startActivity(resultado);
             mDrawerLayout.closeDrawers();
             finish();
@@ -393,7 +411,6 @@ public class AdminActivity extends AppCompatActivity implements
         return flag;
     }
 
-
     /**
      * Método que se ejecuta al actualizar los datos de un administrador.
      *
@@ -407,17 +424,9 @@ public class AdminActivity extends AppCompatActivity implements
             administrador.setNombre(admin.getNombre());
             administrador.setApellido(admin.getApellido());
             administrador.setContrasenia(admin.getContrasenia());
-            int pos = -1;
-            for (int i = 0; i < administradores.size(); i++) {
-                if (administrador.getCorreo().equals(administradores.get(i).getCorreo())) {
-                    administradores.get(i).setNombre(administrador.getNombre());
-                    administradores.get(i).setApellido(administrador.getApellido());
-                    administradores.get(i).setContrasenia(administrador.getContrasenia());
-                    pos = i;
-                }
-            }
-            administradores.set(pos, administrador);
-            SolicitudesData.administradores = administradores;
+
+            managerFireBase.writeNewAdmin(admin);
+
             InicioFragment inicioFragment = new InicioFragment();
             Bundle bundle = new Bundle();
             bundle.putString("nombreAdmin", administrador.getNombre());
@@ -469,6 +478,87 @@ public class AdminActivity extends AppCompatActivity implements
         unbinder = ButterKnife.bind(layout);
         toast.setView(layout);
         toast.show();
+    }
+
+    /**
+     * Método que se ejecuta al agregar un objeto a la base de datos
+     *
+     * @param o Objeto que se va a agregar a la base de datos
+     */
+    @Override
+    public void add(Object o) {
+    }
+
+    /**
+     * Método que se ejecuta al remover un objeto de la base de datos
+     *
+     * @param o Objeto que se va a eliminar de la base de datos
+     */
+    @Override
+    public void remove(Object o) {
+    }
+
+    /**
+     * Método que se ejecuta al terminar de extraer la información de la base de datos.
+     *
+     * @param administradores información que se obtiene de la base de datos
+     */
+    @Override
+    public void onFinalCarga(ArrayList<Administrador> administradores) {
+    }
+
+    /**
+     * Clase que se encarga de verificar si existe conexión a internet
+     */
+    class NetworkChangeReceiver extends BroadcastReceiver {
+
+        /**
+         * Método que recibe la notificacion sobre el estado de la red
+         *
+         * @param context Contexto sobre el que se hace la verificación
+         * @param intent  No se utiliza en este caso
+         */
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            isNetworkAvailable(context);
+        }
+
+        /**
+         * Método que se encarga de verificar si la conexión es valida
+         *
+         * @param context contesto sobre el que se realiza la verificación
+         * @return true si la conexión es valida, false en caso contrario
+         */
+        private boolean isNetworkAvailable(Context context) {
+            ConnectivityManager connectivity = (ConnectivityManager)
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivity != null) {
+                NetworkInfo[] info = connectivity.getAllNetworkInfo();
+                if (info != null) {
+                    for (int i = 0; i < info.length; i++) {
+                        if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                            if (!isConnected) {
+                                if (avisoAbierto) {
+                                    new Handler().postDelayed(new Runnable() {
+                                        public void run() {
+                                            aviso.dismiss();
+                                        }
+                                    }, 2000);
+                                    avisoAbierto = false;
+                                }
+                                isConnected = true;
+                            }
+                            return true;
+                        }
+                    }
+                }
+            }
+            aviso.setStyle(aviso.STYLE_NO_TITLE, R.style.CardView);
+            aviso.show(getSupportFragmentManager(), MainActivity.class.getName());
+            avisoAbierto = true;
+            isConnected = false;
+            return false;
+        }
     }
 }
 

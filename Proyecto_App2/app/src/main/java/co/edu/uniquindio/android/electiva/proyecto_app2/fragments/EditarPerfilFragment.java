@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,7 @@ public class EditarPerfilFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         administrador = getArguments().getParcelable("admin");
+        Log.d("ID1"," "+administrador.getId());
         View x = inflater.inflate(R.layout.fragment_editar_perfil, container, false);
         unbinder = ButterKnife.bind(this, x);
         return x;
@@ -111,6 +113,7 @@ public class EditarPerfilFragment extends Fragment implements View.OnClickListen
     @OnClick(R.id.actualizar_datos)
     protected void onClickActualizar() {
         btnActualizar.startAnimation(animation1);
+        Log.d("ID2"," "+administrador.getId());
         String mensaje = (String) getResources().getText(R.string.mensaje_alerta_edicion_correcta);
         String contraseniaNueva = txtContraseniaNueva.getText().toString();
         if (!txtNombre.getText().toString().equals("")) {

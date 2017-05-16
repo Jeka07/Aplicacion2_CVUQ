@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.AdminActivity;
+import co.edu.uniquindio.android.electiva.proyecto_app2.util.ManagerFireBaseAdmin;
 
 /**
  * Fragmento que se encarga de mostrar la interfaz de inicio.
@@ -30,6 +31,7 @@ public class InicioFragment extends Fragment {
     private String nombreAdmin;
 
     protected Unbinder unbinder;
+
 
     /**
      * Método constructor de la vista
@@ -51,6 +53,7 @@ public class InicioFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         nombreAdmin = getArguments().getString("nombreAdmin");
         View x = inflater.inflate(R.layout.fragment_inicio, container, false);
+
         unbinder = ButterKnife.bind(this, x);
         return x;
     }

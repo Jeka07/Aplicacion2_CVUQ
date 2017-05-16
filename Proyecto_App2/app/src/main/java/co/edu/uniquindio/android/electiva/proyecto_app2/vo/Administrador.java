@@ -13,10 +13,11 @@ import android.os.Parcelable;
  * @version 1.0
  */
 public class Administrador implements Parcelable {
-    String nombre;
-    String apellido;
-    String contrasenia;
-    String correo;
+    private String id;
+    private String nombre;
+    private String apellido;
+    private String contrasenia;
+    private String correo;
 
     /**
      * Método constructor de la clase
@@ -30,6 +31,7 @@ public class Administrador implements Parcelable {
      * @param in pacelable de entrada
      */
     protected Administrador(Parcel in) {
+        id = in.readString();
         nombre = in.readString();
         apellido = in.readString();
         contrasenia = in.readString();
@@ -69,6 +71,7 @@ public class Administrador implements Parcelable {
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(nombre);
         dest.writeString(apellido);
         dest.writeString(contrasenia);
@@ -146,4 +149,23 @@ public class Administrador implements Parcelable {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    /**
+     * Método que permite obtener el id del administrador
+     *
+     * @return id del administrador
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Método que permite definir el id del administrador
+     *
+     * @param id id del administrador
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }

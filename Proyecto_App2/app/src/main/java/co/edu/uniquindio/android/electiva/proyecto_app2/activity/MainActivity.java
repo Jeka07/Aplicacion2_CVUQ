@@ -1,11 +1,15 @@
 package co.edu.uniquindio.android.electiva.proyecto_app2.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +28,8 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.AvisoConexionFragment;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.RegistroFragment;
 import co.edu.uniquindio.android.electiva.proyecto_app2.fragments.IngresoFragment;
+import co.edu.uniquindio.android.electiva.proyecto_app2.interfaz.IManagerFirebase;
+import co.edu.uniquindio.android.electiva.proyecto_app2.util.ManagerFireBaseAdmin;
 import co.edu.uniquindio.android.electiva.proyecto_app2.util.SolicitudesData;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
 
@@ -37,21 +43,29 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
  * @version 1.0
  */
 public class MainActivity extends AppCompatActivity implements IngresoFragment.OnButtonListener,
-        RegistroFragment.OnButtonRegistrarListener {
+        RegistroFragment.OnButtonRegistrarListener, IManagerFirebase {
 
     SolicitudesData sd = new SolicitudesData();
     public static final String ADMINISTRADOR = "administrador";
     public static final String LISTA_ADMINISTRADORES = "administradores";
 
+    @Nullable
     @BindView(R.id.titulo_activity_main)
-    protected TextView tituloActicity;
+    protected TextView tituloActivity;
+
     private Unbinder unbinder;
 
-    Fragment fragmentoActual;
+    private Fragment fragmentoActual;
     public Boolean fragmentoNuevo;
-    String etiqueta;
-    int titulo_fragmento;
-    ArrayList<Administrador> administradores;
+    private String etiqueta;
+    private int titulo_fragmento;
+    private ArrayList<Administrador> administradores;
+    private ManagerFireBaseAdmin managerFireBase;
+    final AvisoConexionFragment aviso = new AvisoConexionFragment();
+    private boolean avisoAbierto = false;
+
+    private NetworkChangeReceiver receiver;
+    private boolean isConnected = false;
 
     /**
      * Método que se ejecuta en la creación de la actividad
@@ -62,22 +76,14 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        unbinder = ButterKnife.bind(this);
-        if (!isInternetAccess()) {
-            final AvisoConexionFragment aviso = new AvisoConexionFragment();
-            aviso.setStyle(aviso.STYLE_NO_TITLE, R.style.CardView);
-            aviso.show(getSupportFragmentManager(), MainActivity.class.getName());
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    aviso.dismiss();
-                }
-            }, 2000);
-        }
 
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        llenarAdministradores(extras);
-        SolicitudesData.administradores = administradores;
+        managerFireBase = ManagerFireBaseAdmin.instancia(this);
+        unbinder = ButterKnife.bind(this);
+
+        aviso.setCancelable(false);
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkChangeReceiver();
+        registerReceiver(receiver, filter);
 
         fragmentoNuevo = false;
         if (savedInstanceState == null) {
@@ -88,32 +94,13 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
             ingresoFragment.setArguments(bundle);
             etiqueta = getResources().getString(R.string.tag_fragment_ingreso);
             dibujarFragmento(ingresoFragment, R.string.titulo_frag_ingreso, etiqueta);
-
+        } else if (savedInstanceState.get("llave").equals("true")) {
+            Intent home = new Intent(this, MainActivity.class);
+            startActivity(home);
+            finish();
         } else {
             Fragment fp2 = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentGuardado");
             dibujarFragmento(fp2, savedInstanceState.getInt("tituloFragmento"), fp2.getTag());
-        }
-    }
-
-
-    /**
-     * Método que se encarga de llenar el arraylist de administradores
-     *
-     * @param extras contiene el arraylist enviado desde el AdminActivity al realizar
-     *               una edición en los datos del administrador.
-     */
-    public void llenarAdministradores(Bundle extras) {
-
-        String tag = getResources().getString(R.string.tag_fragment_registro);
-        RegistroFragment registroFragment = (RegistroFragment) getSupportFragmentManager().findFragmentByTag(tag);
-
-        if (registroFragment == null) {
-            registroFragment = new RegistroFragment();
-        }
-        if (extras != null) {
-            administradores = extras.getParcelableArrayList(LISTA_ADMINISTRADORES);
-        } else {
-            administradores = registroFragment.llenarAdministradores();
         }
     }
 
@@ -126,8 +113,25 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         etiqueta = fragmentoActual.getTag();
-        outState.putInt("tituloFragmento", titulo_fragmento);
-        getSupportFragmentManager().putFragment(outState, "fragmentGuardado", fragmentoActual);
+        if (getResources().getConfiguration().orientation ==
+                Configuration.ORIENTATION_LANDSCAPE) {
+            if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
+                    Configuration.SCREENLAYOUT_SIZE_LARGE) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Soy grande", Toast.LENGTH_LONG);
+                toast.show();
+                outState.putString("llave", "true");
+            } else {
+                Toast toast = Toast.makeText(getApplicationContext(), "Soy pequeño", Toast.LENGTH_LONG);
+                toast.show();
+                outState.putString("llave", "false");
+                outState.putInt("tituloFragmento", titulo_fragmento);
+                getSupportFragmentManager().putFragment(outState, "fragmentGuardado", fragmentoActual);
+            }
+        } else {
+            outState.putString("llave", "false");
+            outState.putInt("tituloFragmento", titulo_fragmento);
+            getSupportFragmentManager().putFragment(outState, "fragmentGuardado", fragmentoActual);
+        }
     }
 
     /**
@@ -155,7 +159,8 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
         }
         fragmentoActual = fragment;
         titulo_fragmento = contextName;
-        tituloActicity.setText(titulo_fragmento);
+        if (tituloActivity != null)
+            tituloActivity.setText(titulo_fragmento);
     }
 
     /**
@@ -221,11 +226,9 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
     public void onIngresoSelected(boolean existe, Administrador administrador) {
         if (existe) {
             Intent intent = new Intent(this, AdminActivity.class);
-            int pos = administradores.indexOf(administrador);
-            // intent.putExtra(ADMINISTRADOR, administrador);
-            // intent.putParcelableArrayListExtra(LISTA_ADMINISTRADORES, administradores);
-            intent.putExtra("posicion", pos);
+            intent.putExtra(ADMINISTRADOR, administrador);
             startActivity(intent);
+            finish();
         } else {
             String mensaje = (String) getResources().getText(R.string.mensaje_alerta_sesion);
             mostrarAlerta(mensaje);
@@ -236,11 +239,13 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
      * Método que se ejecuta al registrar un nuevo administrador.
      */
     @Override
-    public void onRegistradoListener(String mensaje, boolean registroCorrecto) {
+    public void onRegistradoListener(String mensaje, boolean registroCorrecto, Administrador admin) {
         if (registroCorrecto) {
             mostrarAlerta(mensaje);
             String tag = getResources().getString(R.string.tag_fragment_ingreso);
+            managerFireBase.insertarAdministrador(admin);
             dibujarFragmento(new IngresoFragment(), R.string.titulo_frag_inicio, tag);
+
         } else {
             mostrarAlerta(mensaje);
         }
@@ -280,6 +285,15 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
     }
 
     /**
+     * Método que se ejecuta cuando se destruye la actividad
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
+    /**
      * Método que permite obtener la lista de administradores registrados
      *
      * @return lista de administradores
@@ -298,14 +312,76 @@ public class MainActivity extends AppCompatActivity implements IngresoFragment.O
     }
 
     /**
-     * Método que se encarga de verificar si existe conexión a internet
+     * Método que se ejecuta al agregar un objeto a la base de datos
      *
-     * @return true si el dispositivo cuenta con acceso a internet, false en caso contrario
+     * @param o Objeto que se va a agregar a la base de datos
      */
-    private boolean isInternetAccess() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
+    @Override
+    public void add(Object o) {
+    }
+
+    /**
+     * Método que se ejecuta al remover un objeto de la base de datos
+     *
+     * @param o Objeto que se va a eliminar de la base de datos
+     */
+    @Override
+    public void remove(Object o) {
+    }
+
+    /**
+     * Clase que se encarga de verificar si existe conexión a internet
+     */
+    class NetworkChangeReceiver extends BroadcastReceiver {
+
+        /**
+         * Método que recibe la notificacion sobre el estado de la red
+         *
+         * @param context Contexto sobre el que se hace la verificación
+         * @param intent  No se utiliza en este caso
+         */
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            isNetworkAvailable(context);
+        }
+
+        /**
+         * Método que se encarga de verificar si la conexión es valida
+         *
+         * @param context contesto sobre el que se realiza la verificación
+         * @return true si la conexión es valida, false en caso contrario
+         */
+        private boolean isNetworkAvailable(Context context) {
+            ConnectivityManager connectivity = (ConnectivityManager)
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivity != null) {
+                NetworkInfo[] info = connectivity.getAllNetworkInfo();
+                if (info != null) {
+                    for (int i = 0; i < info.length; i++) {
+                        if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                            if (!isConnected) {
+
+                                if (avisoAbierto) {
+                                    new Handler().postDelayed(new Runnable() {
+                                        public void run() {
+                                            aviso.dismiss();
+                                        }
+                                    }, 2000);
+                                    avisoAbierto = false;
+                                }
+                                isConnected = true;
+                            }
+                            return true;
+                        }
+                    }
+                }
+            }
+            aviso.setStyle(aviso.STYLE_NO_TITLE, R.style.CardView);
+            aviso.show(getSupportFragmentManager(), MainActivity.class.getName());
+            avisoAbierto = true;
+            isConnected = false;
+            return false;
+        }
     }
 }
 

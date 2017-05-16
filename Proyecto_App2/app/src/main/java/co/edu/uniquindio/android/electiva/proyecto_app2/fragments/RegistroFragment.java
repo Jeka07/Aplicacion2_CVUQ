@@ -3,7 +3,9 @@ package co.edu.uniquindio.android.electiva.proyecto_app2.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,13 +15,18 @@ import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import co.edu.uniquindio.android.electiva.proyecto_app2.R;
 import co.edu.uniquindio.android.electiva.proyecto_app2.activity.MainActivity;
+import co.edu.uniquindio.android.electiva.proyecto_app2.interfaz.IManagerFirebase;
+import co.edu.uniquindio.android.electiva.proyecto_app2.util.ManagerFireBaseAdmin;
 import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
 
 /**
@@ -30,7 +37,7 @@ import co.edu.uniquindio.android.electiva.proyecto_app2.vo.Administrador;
  * @author Jesica Tapasco Velez
  * @version 1.0
  */
-public class RegistroFragment extends Fragment implements View.OnClickListener {
+public class RegistroFragment extends Fragment implements View.OnClickListener, IManagerFirebase, ManagerFireBaseAdmin.OnCarga{
 
     @BindView(R.id.agregar_administrador)
     protected Button btnRegistro;
@@ -49,9 +56,12 @@ public class RegistroFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.registr_confirmar_contrasenia)
     protected EditText txtContraseniaConf;
 
+    protected Unbinder unbinder;
+
     private boolean registroCorrecto;
 
     private OnButtonRegistrarListener listener;
+    private ManagerFireBaseAdmin managerFireBase;
 
     /**
      * Método constructor del fragmento
@@ -70,14 +80,14 @@ public class RegistroFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View x = inflater.inflate(R.layout.fragment_registro, container, false);
 
-        if (getArguments() != null) {
-            administradores = getArguments().getParcelableArrayList(MainActivity.LISTA_ADMINISTRADORES);
-        } else {
-            administradores = llenarAdministradores();
-        }
+        View x = inflater.inflate(R.layout.fragment_registro, container, false);
+        managerFireBase = ManagerFireBaseAdmin.instancia(this);
+        administradores = managerFireBase.cargarLista();
+        Log.d("hola","CreateView");
         animacionButton();
+        unbinder = ButterKnife.bind(this, x);
+
         return x;
     }
 
@@ -89,23 +99,25 @@ public class RegistroFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
     }
+
+
     /**
      * Método que gestiona los eventos de tipo Click sobre el botón btnRegistro
      */
     @OnClick(R.id.agregar_administrador)
-    public void onClickRegistrar(){
+    public void onClickRegistrar() {
+        Log.d("hola","Manager");
         btnRegistro.startAnimation(animation1);
         String mensaje = "";
+        Administrador admin = new Administrador();
         if (!txtNombre.getText().toString().equals("") && !txtApellido.getText().toString().equals("")
                 && !txtCorreo.getText().toString().equals("") && !txtContrasenia.getText().toString().equals("")
                 && !txtContraseniaConf.getText().toString().equals("")) {
             if (txtContraseniaConf.getText().toString().equals(txtContrasenia.getText().toString())) {
-                Administrador admin = new Administrador();
                 admin.setNombre(txtNombre.getText().toString());
                 admin.setApellido(txtApellido.getText().toString());
                 admin.setCorreo(txtCorreo.getText().toString());
                 admin.setContrasenia(txtContrasenia.getText().toString());
-                administradores.add(admin);
                 registroCorrecto = true;
                 mensaje = getResources().getString(R.string.mensaje_registro_correcto);
             } else {
@@ -119,7 +131,7 @@ public class RegistroFragment extends Fragment implements View.OnClickListener {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService
                 (Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(txtContrasenia.getWindowToken(), 0);
-        listener.onRegistradoListener(mensaje,registroCorrecto);
+        listener.onRegistradoListener(mensaje, registroCorrecto, admin);
     }
 
     /**
@@ -132,11 +144,26 @@ public class RegistroFragment extends Fragment implements View.OnClickListener {
         animation1.setFillAfter(true);
     }
 
+    @Override
+    public void add(Object o) {
+
+    }
+
+    @Override
+    public void remove(Object o) {
+
+    }
+
+    @Override
+    public void onFinalCarga(ArrayList<Administrador> administradores) {
+
+    }
+
     /**
      * Interfaz utilizada para comunicar el evento de generado al registrar un administrador
      */
     public interface OnButtonRegistrarListener {
-        void onRegistradoListener(String mensaje,boolean registroCorrecto);
+        void onRegistradoListener(String mensaje, boolean registroCorrecto, Administrador administrador);
     }
 
     /**

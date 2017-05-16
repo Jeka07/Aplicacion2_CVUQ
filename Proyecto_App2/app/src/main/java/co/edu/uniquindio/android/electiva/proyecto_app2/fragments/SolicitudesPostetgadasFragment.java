@@ -3,6 +3,7 @@ package co.edu.uniquindio.android.electiva.proyecto_app2.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -52,6 +53,9 @@ public class SolicitudesPostetgadasFragment extends Fragment implements Adaptado
 
     @BindView(R.id.mensaje_solicitudes_post)
     protected TextView mensaje;
+    @Nullable
+    @BindView(R.id.titulo_detalle_solicitud)
+    protected TextView tituloDetalle;
 
     protected Unbinder unbinder;
 
@@ -76,7 +80,7 @@ public class SolicitudesPostetgadasFragment extends Fragment implements Adaptado
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_solicitudes, container, false);
-        unbinder = ButterKnife.bind(this,v);
+        unbinder = ButterKnife.bind(this, v);
         return v;
     }
 
@@ -121,6 +125,13 @@ public class SolicitudesPostetgadasFragment extends Fragment implements Adaptado
             }
         } else {
             mensaje.setVisibility(View.VISIBLE);
+            if (getResources().getConfiguration().orientation ==
+                    Configuration.ORIENTATION_LANDSCAPE) {
+                if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
+                        Configuration.SCREENLAYOUT_SIZE_LARGE) {
+                    tituloDetalle.setVisibility(View.INVISIBLE);
+                }
+            }
         }
     }
 
@@ -129,6 +140,7 @@ public class SolicitudesPostetgadasFragment extends Fragment implements Adaptado
      *
      * @param fragment fragmento a dibujar
      */
+
     private void dibujarDetalle(Fragment fragment) {
         getFragmentManager().beginTransaction()
                 .replace(R.id.vista_detalle_grupo_inv, fragment)
